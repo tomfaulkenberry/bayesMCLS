@@ -3,7 +3,7 @@
 This repository contains materials for my workshop on Bayesian Statistics in Numerical Cognition, held at [MCLS 2019](https://www.the-mcls.org/) in Ottawa, ON. 
 
 ## Materials
-- Workshop slides ([pdf](workshop.pdf))
+- Workshop slides (coming soon!)
 - [JASP software](http://jasp-stats.org)
 
 ## Data sets 

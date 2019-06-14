@@ -7,7 +7,7 @@ This repository contains materials for my workshop on Bayesian Statistics in Num
 - [JASP software](http://jasp-stats.org)
 
 ## Data sets 
-Each of the datasets below is formatted in CSV (comma separated value) format, which is the format required for JASP. You will want to download the files somewhere on your computer. Windows users should "right-click" on the CSV link. Mac users should "ctrl+click" on the CSV link. Alternatively, you can download a single ZIP archive of the files [here](datasets.zip).
+Each of the datasets below is formatted in CSV (comma separated value) format, which is the format required for JASP. You will want to download the files somewhere on your computer. Windows users should "right-click" on the CSV link. Mac users should "ctrl+click" on the CSV link. Alternatively, you can download a single ZIP archive of the files [here](https://raw.githubusercontent.com/tomfaulkenberry/bayesMCLS/master/datasets.zip).
 
 *Note*: all datasets below are simulated and should be used for instruction only. Each dataset was generated in R and to the best extent possible reflects the structure of the data reported in the accompanying paper. The R script for generating these datasets is [here](datasets/genData.R).
 

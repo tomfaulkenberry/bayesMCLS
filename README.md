@@ -3,7 +3,7 @@
 This repository contains materials for my workshop on Bayesian Statistics in Numerical Cognition, held at [MCLS 2019](https://www.the-mcls.org/) in Ottawa, ON. 
 
 ## Materials
-- Workshop slides (coming soon!)
+- Workshop slides ([pdf](workshop.pdf))
 - [JASP software](http://jasp-stats.org)
 - Online Bayes factor [calculator](https://tomfaulkenberry.shinyapps.io/anovaBFcalc/) for ANOVA summaries
 

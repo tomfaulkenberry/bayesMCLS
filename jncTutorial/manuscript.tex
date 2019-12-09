@@ -1,3 +1,6 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
 \documentclass[english,,doc,floatsintext]{apa6}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
@@ -6,34 +9,31 @@
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
+  \usepackage{unicode-math}
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
 \IfFileExists{microtype.sty}{%
-\usepackage{microtype}
+\usepackage[]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \usepackage{hyperref}
-\hypersetup{unicode=true,
+\hypersetup{
             pdftitle={Bayesian Inference in Numerical Cognition: A Tutorial Using JASP},
             pdfauthor={Thomas J. Faulkenberry, Alexander Ly, \& Eric-Jan Wagenmakers},
             pdfborder={0 0 0},
             breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[shorthands=off,main=english]{babel}
-\else
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
-\fi
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -43,12 +43,6 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -63,50 +57,43 @@
 \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
-
-
-  \title{Bayesian Inference in Numerical Cognition: A Tutorial Using JASP}
-    \author{Thomas J. Faulkenberry\textsuperscript{1}, Alexander Ly\textsuperscript{2,3}, \& Eric-Jan Wagenmakers\textsuperscript{2}}
-    \date{}
-  
-\shorttitle{Bayesian inference in numerical cognition}
-\affiliation{
-\vspace{0.5cm}
-\textsuperscript{1} Tarleton State University\\\textsuperscript{2} University of Amsterdam\\\textsuperscript{3} Centrum Wiskunde \& Informatica}
-\usepackage{csquotes}
-\usepackage{upgreek}
-\captionsetup{font=singlespacing,justification=justified}
-
-\usepackage{longtable}
-\usepackage{lscape}
-\usepackage{multirow}
-\usepackage{tabularx}
-\usepackage[flushleft]{threeparttable}
-\usepackage{threeparttablex}
-
-\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
-
+% set default figure placement to htbp
 \makeatletter
-\newcommand\LastLTentrywidth{1em}
-\newlength\longtablewidth
-\setlength{\longtablewidth}{1in}
-\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=english]{babel}
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+
+\title{Bayesian Inference in Numerical Cognition: A Tutorial Using JASP}
+\author{Thomas J. Faulkenberry\textsuperscript{1}, Alexander Ly\textsuperscript{2,3}, \& Eric-Jan Wagenmakers\textsuperscript{2}}
+\date{}
 
 \authornote{
 
 Correspondence concerning this article should be addressed to Thomas J. Faulkenberry, Department of Psychological Sciences, Box T-0820, Tarleton State University, Stephenville, TX 76401. E-mail: \href{mailto:faulkenberry@tarleton.edu}{\nolinkurl{faulkenberry@tarleton.edu}}}
 
 \abstract{
+Researchers in numerical cognition rely on hypothesis testing and estimation to evaluate the evidential value of data. Though there has been increased interest in Bayesian statistics as an alternative to the classical, frequentist approach to hypothesis testing, many researchers remain hesitant to change their methods of inference. In this tutorial, we provide a concise introduction to Bayesian hypothesis testing and estimation in the context of numerical cognition. Here, we focus on three examples of Bayesian inference: the \(t\)-test, linear regression, and analysis of variance. Using the free software package JASP, we provide the reader with a basic understanding of how Bayesian inference works ``under the hood'' as well as instructions detailing how to perform and interpret each Bayesian analysis.
+
 
 }
 
 \begin{document}
 \maketitle
 
-Like any other discipline within the psychological and behavioral sciences, researchers in numerical cognition rely on statistical inference, and hypothesis testing in particular, to verify theoretical claims against observed data. In recent years, Bayesian inference has become increasingly popular as an alternative to classical null hypothesis significance testing (NHST). Bayesian inference operates under a fundamentally different framework from NHST; instead of hard \enquote{accept/reject} decisions about a null hypothesis, Bayesian inference works by quantifying evidence about competing hypotheses in light of observed data. Hypotheses that do a better job of predicting data will receive increased support, whereas hypotheses that do not predict the data well will receive decreased support.
+Like any other discipline within the psychological and behavioral sciences, researchers in numerical cognition rely on statistical inference, and hypothesis testing in particular, to verify theoretical claims against observed data. In recent years, Bayesian inference has become increasingly popular as an alternative to classical null hypothesis significance testing (NHST). Bayesian inference operates under a fundamentally different framework from NHST; instead of hard ``accept/reject'' decisions about a null hypothesis, Bayesian inference works by quantifying evidence about competing hypotheses in light of observed data. Hypotheses that do a better job of predicting data will receive increased support, whereas hypotheses that do not predict the data well will receive decreased support.
 
 Despite its many advantages over NHST and increased calls for its use, the Bayesian approach is still relatively underutilized in the social sciences (van de Schoot, Winter, Ryan, Zondervan-Zwijnenburg, \& Depaoli, 2017). One of the possible reasons for this lack of adoption may stem from the fact that Bayesian statistics is rarely taught in applied statistics courses. As a result, some researchers may not feel confident in their ability to apply these methods to their own problems of interest. Also, standard statistical software packages did not include routines for Bayesian inference, and so performing Bayesian inference in the past often required sophisticated programming skills.
 
@@ -124,7 +111,7 @@ Hypothesis testing can be viewed as a process of validating general claims based
 
 The superiority claim about the new study programme can be formalized as the working hypothesis \(\mathcal{H}_{1} : \mu > 50\). Here \(\mu\) refers to the \emph{population} mean of SAMA score of the same sixth graders, but taught using the new study program instead. Such a treatment population does not (yet) exist and \(\mu\) cannot be measured, and is, therefore, unknown.
 
-Nonetheless, we can infer the validity of the working hypothesis \(\mathcal{H}_{1}\) by running an experiment in which, say, \(n=90\) sixth graders are taught with the new study programme. Suppose that these particular participants scored an average SAMA score of \(\bar{y} = 52.07\). Clearly, this sample mean is larger than the status quo population mean of \(50\), but can we assume that this finding generalizes to the whole population? If the answer is \enquote{yes} and we declare the working hypothesis to be verified, then how confident would we be about such a decision? Below we recall how \(p\)-values are typically used to make hard \enquote{yes} and \enquote{no} decisions, and we remind the reader why a \(p\)-value does not quantify the (un)certainty of such decisions.
+Nonetheless, we can infer the validity of the working hypothesis \(\mathcal{H}_{1}\) by running an experiment in which, say, \(n=90\) sixth graders are taught with the new study programme. Suppose that these particular participants scored an average SAMA score of \(\bar{y} = 52.07\). Clearly, this sample mean is larger than the status quo population mean of \(50\), but can we assume that this finding generalizes to the whole population? If the answer is ``yes'' and we declare the working hypothesis to be verified, then how confident would we be about such a decision? Below we recall how \(p\)-values are typically used to make hard ``yes'' and ``no'' decisions, and we remind the reader why a \(p\)-value does not quantify the (un)certainty of such decisions.
 
 \hypertarget{statistical-models}{%
 \subsection{Statistical models}\label{statistical-models}}
@@ -148,10 +135,10 @@ Bayesian testing addresses these problems as follows. First, it compares the two
 
 Prior model probabilities help us contextualize the testing problem. Working as policy makers, we might have seen many claims of improved study programs that did not work out well. For instance, if past claims of improved study programmes led to null results four times out of five (i.e., we place 4-to-1 odds against the claim of improvement), then we might set \(P( \mathcal{M}_{1}) = 0.2\) and \(P(\mathcal{M}_{0}) = 0.8\). On the other hand, the designers of the new study program to increase SAMA scores might feel strongly about the benefits of their program, and so might choose \(P( \mathcal{M}_{1}) = 0.7\) and \(P(\mathcal{M}_{0}) = 0.3\) instead. If \(\mathcal{M}_{1}\) and \(\mathcal{M}_{0}\) are the only models under consideration we have \(0 < P( \mathcal{M}_{0}) < 1\) and \(P( \mathcal{M}_{1})= 1 - P( \mathcal{M}_{0})\). The Bayes factor \(\textnormal{BF}_{10}(d)\) is a function of the observed data \(d\) that updates these prior model probabilities to posterior model probabilities, as follows:
 
-\begin{align}
+\begin{equation}
 \label{eqPriorToPosterior}
 P(\mathcal{M}_{1} \mid d) = \frac{ \textnormal{BF}_{10}(d) P(\mathcal{M}_{1})}{\textnormal{BF}_{10}(d) P(\mathcal{M}_{1}) + P(\mathcal{M}_{0})} \text{, and } P(\mathcal{M}_{0} \mid d) = 1 - P(\mathcal{M}_{1} \mid d). 
-\end{align}
+\end{equation}
 
 Note that the data only enter the formula via the Bayes factor. For instance, if \(\textnormal{BF}_{10}(d) = 6\), then the sceptic's probability of the superiority of the new study program increases to 60\%, i.e., \(P(\mathcal{M}_{1} \mid d)=0.60\), and retains 40\% probability of for the null after data observation. On the other hand, the proponent of the new study program would report a posterior model probability of \(P(\mathcal{M}_{1} \mid d)=0.93\) and \(P(\mathcal{M}_{0} \mid d)=0.07\). Note that the posterior model probabilities combine what we believed prior to data observation with the evidence of the data in terms of the Bayes factors. Both sceptic and the proponent could, if they wish, declare the new study programme to be superior to the status quo, but the sceptic would be much less confident than the proponent. The resulting posterior model probabilities can, thus, be used to complement a decision with a measure of uncertainty.
 
@@ -175,22 +162,22 @@ Bayes factor & Evidence\\
 \end{tabular}
 \end{center}
 
-In principle, the Bayes factor does not come with a specified decision rule. We believe that context made explicit using prior model probabilities by field experts are much more important, than overly generalized \enquote{rules} such \(p < 0.05\) or \(\textnormal{BF} _{10} > k\), where \(k\) is some arbitrarily chosen number.
+In principle, the Bayes factor does not come with a specified decision rule. We believe that context made explicit using prior model probabilities by field experts are much more important, than overly generalized ``rules'' such \(p < 0.05\) or \(\textnormal{BF} _{10} > k\), where \(k\) is some arbitrarily chosen number.
 
 \hypertarget{tutorial-examples}{%
 \section{Tutorial examples}\label{tutorial-examples}}
 
-In this section, we describe a number of practical examples of using Bayesian inference in the context of numerical cognition. In the examples, each based on a well-cited paper in numerical cognition, we demonstrate a number of JASP's features using synthetic data sets, each generated in R using specific model assumptions that closely match the patterns of observed data described in the original papers.The data sets, as well as the R script used to generate the data sets, are available for download from \url{https://git.io/JeXui}.
+In the remainder of the paper, we describe a number of practical examples of using Bayesian inference in the context of numerical cognition. In the examples, each based on a well-cited paper in numerical cognition, we demonstrate a number of JASP's features using synthetic data sets, each generated in R using specific model assumptions that closely match the patterns of observed data described in the original papers.The data sets, as well as the R script used to generate the data sets, are available for download from \url{https://git.io/JeXui}.
 
 \hypertarget{example-1-a-bayesian-t-test}{%
-\subsection{\texorpdfstring{Example 1: a Bayesian \(t\)-test}{Example 1: a Bayesian t-test}}\label{example-1-a-bayesian-t-test}}
+\section{\texorpdfstring{Example 1: a Bayesian \(t\)-test}{Example 1: a Bayesian t-test}}\label{example-1-a-bayesian-t-test}}
 
 To demonstrate the Bayesian \(t\)-test, we will use a data set based on Verguts and De Moor (2005), who investigated whether two-digit numbers are represented holistically on a mental number line, or instead are processed by decomposing into separate digit components. In their experiment, Verguts and De Moor (2005) presented subjects with pairs of two-digit numbers who had the same decade (e.g., 53 versus 51) or decades that differed by one (e.g., 53 versus 61). Their reasoning for this manipulation was as follows: if subjects are using holistic processes to compare two-digit numbers, then they should exhibit a numerical distance effect (Moyer \& Landauer, 1967) on same-decade as well as different-decade pairs. That is, response times should be faster when the numerical distance between the two numbers is large, and slower when the numerical distance is small. If, on the other hand, subjects are using decomposed processes, this numerical distance effect should disappear on the different-decade pairs. This is because in different-decade pairs, such as 53 versus 61, the comparison can be made solely on the basis of the decade digit alone. Thus, response times in this condition should be immune to manipulation of numerical distance.
 
 In their original paper, Verguts and De Moor (2005) found support for decomposed processing on the basis of several single sample \(t\)-tests. For subjects asked to choose the smaller of the digit pairs, they found (as expected) a statistically significant numerical distance effect for same-decade pairs, \(t(22) = -3.86\), \(p<0.001\). However, the distance effect was not significantly different from 0 for different-decade pairs, \(t(22)=-0.14\), \(p=0.884\). A similar pattern was found for subjects who were asked to choose the larger of each pair: there was a significant distance effect for same-decade pairs, \(t(19)=-5.31\), \(p<0.001\), but no significant distance effect for different-decade pairs, \(t(19)=0.70\), \(p=0.479\).
 
 \hypertarget{theory-of-the-bayesian-t-test}{%
-\subsubsection{\texorpdfstring{Theory of the Bayesian \(t\)-test}{Theory of the Bayesian t-test}}\label{theory-of-the-bayesian-t-test}}
+\subsection{\texorpdfstring{Theory of the Bayesian \(t\)-test}{Theory of the Bayesian t-test}}\label{theory-of-the-bayesian-t-test}}
 
 The Bayesian \(t\)-test forms the basis for the other tests described in this paper. The technical details are included for completeness, but are not necessary for the use of Bayes factors.
 
@@ -198,7 +185,7 @@ Recall that a Bayes factor compares two models, say, \(\mathcal{M}_{1}\) and \(\
 
 To construct a Bayes factor, the statistician needs to select two priors --one for each model, which are denoted by \(\pi_{1} (\theta_{1})\) and \(\pi_{0} (\theta_{0})\) respectively (e.g., Bayarri, Berger, Forte, \& Garcia-Donato, 2012), and provide its users with a computational method. We only introduced the notation \(\pi_{1} (\theta_{1})\) and \(\pi_{0} (\theta_{0})\), chosen by the statistician, to highlight their difference to prior model probabilities which are denoted with a capital \(P\), chosen by the field experts.
 
-The Bayesian \(t\)-test is based on the priors \(\pi_{1}\), which puts an \enquote{uninformative} prior on the nuisance parameter \(\sigma\) (e.g., Ly, Marsman, Verhagen, Grasman, \& Wagenmakers, 2017) in conjunction with a Cauchy prior on the population effect size \(\delta = \mu / \sigma\), and the prior \(\pi_{0}\) with the same \enquote{uninformative} prior on the nuisance parameter \(\sigma\). With these priors, the resulting Bayes factor has a number of desirable properties: (1) \textbf{Measurement invariant.} The Bayes factor as a measure of evidence does not change if the units of measurements are changed (e.g., Rouder, Speckman, Sun, Morey, \& Iverson, 2009). For instance, if the data were to consist of temperature measurements, the Bayes factor would be the same regardless of the data being entered as Celsius or Fahrenheit. (2) \textbf{Predictively matched.} The Bayes factor reflects perfectly indifference, i.e., \(\textnormal{BF}_{10}=1\) when the data are completely uninformative. A Bayes factor of one implies that the posterior model probabilities equal the prior model probabilities, and nothing has been learned; see Jeffreys (1961), for further details. (3) \textbf{Information consistent.} For a sufficiently large enough sample size \(n\) fixed, the Bayes factor provides overwhelmingly support for the alternative, whenever the observed \(t\)-value goes to infinity; see Gronau, Ly, and Wagenmakers (n.d.), Ly, Verhagen, and Wagenmakers (2016) for further details. (4) \textbf{(Asymptotically) consistent.} As the Bayes factor takes in an increasing number of samples of data points generated under the null model, then as \(n\) grows, the Bayes factor \(\textnormal{BF}_{10}\) tends to zero to convey support for the data generating model \(\mathcal{M}_{0}\). On the other hand, if \(n\) grows with data generated under the alternative, the Bayes factor \(\textnormal{BF}_{10}\) grows unbounded; see for instance Liang, Paulo, Molina, Clyde, and Berger (2008). (5) \textbf{Robust to changes in the sample size.} With the uninformative prior on \(\sigma\), this Bayes factor allows for optional stopping, that is, early stopping when there is enough evidence for the alternative (e.g., Hendriksen, Heide, \& Grünwald, 2018) without inflating the type 1 error. On top of this, the Bayesian \(t\)-test also allows for optional continuation, which implies that one can build on top of previous results; see for instance Faulkenberry (2019), Grünwald, Heide, and Koolen (2019), Ly, Etz, Marsman, and Wagenmakers (n.d.). Note that properties (4), (5), and (6) imply that the Bayesian \(t\)-test, first derived by Jeffreys (1948), also has good frequentist properties.
+The Bayesian \(t\)-test is based on the priors \(\pi_{1}\), which puts an ``uninformative'' prior on the nuisance parameter \(\sigma\) (e.g., Ly, Marsman, Verhagen, Grasman, \& Wagenmakers, 2017) in conjunction with a Cauchy prior on the population effect size \(\delta = \mu / \sigma\), and the prior \(\pi_{0}\) with the same ``uninformative'' prior on the nuisance parameter \(\sigma\). With these priors, the resulting Bayes factor has a number of desirable properties: (1) \textbf{Measurement invariant.} The Bayes factor as a measure of evidence does not change if the units of measurements are changed (e.g., Rouder, Speckman, Sun, Morey, \& Iverson, 2009). For instance, if the data were to consist of temperature measurements, the Bayes factor would be the same regardless of the data being entered as Celsius or Fahrenheit. (2) \textbf{Predictively matched.} The Bayes factor reflects perfectly indifference, i.e., \(\textnormal{BF}_{10}=1\) when the data are completely uninformative. A Bayes factor of one implies that the posterior model probabilities equal the prior model probabilities, and nothing has been learned; see Jeffreys (1961), for further details. (3) \textbf{Information consistent.} For a sufficiently large enough sample size \(n\) fixed, the Bayes factor provides overwhelmingly support for the alternative, whenever the observed \(t\)-value goes to infinity; see Gronau, Ly, and Wagenmakers (n.d.), Ly, Verhagen, and Wagenmakers (2016) for further details. (4) \textbf{(Asymptotically) consistent.} As the Bayes factor takes in an increasing number of samples of data points generated under the null model, then as \(n\) grows, the Bayes factor \(\textnormal{BF}_{10}\) tends to zero to convey support for the data generating model \(\mathcal{M}_{0}\). On the other hand, if \(n\) grows with data generated under the alternative, the Bayes factor \(\textnormal{BF}_{10}\) grows unbounded; see for instance Liang, Paulo, Molina, Clyde, and Berger (2008). (5) \textbf{Robust to changes in the sample size.} With the uninformative prior on \(\sigma\), this Bayes factor allows for optional stopping, that is, early stopping when there is enough evidence for the alternative (e.g., Hendriksen, Heide, \& Grünwald, 2018) without inflating the type 1 error. On top of this, the Bayesian \(t\)-test also allows for optional continuation, which implies that one can build on top of previous results; see for instance Faulkenberry (2019), Grünwald, Heide, and Koolen (2019), Ly, Etz, Marsman, and Wagenmakers (n.d.). Note that properties (4), (5), and (6) imply that the Bayesian \(t\)-test, first derived by Jeffreys (1948), also has good frequentist properties.
 
 With these priors at hand, the Bayes factor is defined as a ratio of marginal likelihoods, that is,
 
@@ -209,9 +196,9 @@ With these priors at hand, the Bayes factor is defined as a ratio of marginal li
 which practitioners do not need to compute themselves, as JASP does the computations for them in the background.
 
 \hypertarget{implementation-in-jasp}{%
-\subsubsection{Implementation in JASP}\label{implementation-in-jasp}}
+\subsection{Implementation in JASP}\label{implementation-in-jasp}}
 
-We will now describe a Bayesian analysis inspired by the original methods of Verguts and De Moor (2005). After downloading the file \texttt{ttest.csv} from the Github repository (\url{https://git.io/JeXui}), you can open the file in JASP by clicking the menu button -- \enquote{Open} -- \enquote{Computer}, which will then open a file browser for you to locate the downloaded file on your computer. Once the file is opened, you will be able to see a data set with three variables (see Figure \ref{fig:ttestData}. The variable \texttt{condition} defines whether a participant was instructed to choose the smaller or the larger of each presented two-digit number pair. The variable \texttt{distSame} represents each participant's slope after regressing response times against numerical distance (c.f., Lorch \& Myers, 1990) for same-decade pairs. Note that a negative slope is indicative of the numerical distance effect, as response times decrease as a function of increasing numerical distance. Finally, \texttt{distDifferent} represents each subject's regression slope for different-decade pairs.
+We will now describe a Bayesian analysis inspired by the original methods of Verguts and De Moor (2005). After downloading the file \texttt{ttest.csv} from the Github repository (\url{https://git.io/JeXui}), you can open the file in JASP by clicking the menu button -- ``Open'' -- ``Computer'', which will then open a file browser for you to locate the downloaded file on your computer. Once the file is opened, you will be able to see a data set with three variables (see Figure \ref{fig:ttestData}. The variable \texttt{condition} defines whether a participant was instructed to choose the smaller or the larger of each presented two-digit number pair. The variable \texttt{distSame} represents each participant's slope after regressing response times against numerical distance (c.f., Lorch \& Myers, 1990) for same-decade pairs. Note that a negative slope is indicative of the numerical distance effect, as response times decrease as a function of increasing numerical distance. Finally, \texttt{distDifferent} represents each subject's regression slope for different-decade pairs.
 
 \begin{figure}
 \centering
@@ -219,7 +206,7 @@ We will now describe a Bayesian analysis inspired by the original methods of Ver
 \caption{\label{fig:ttestData}JASP screenshot showing the \texttt{ttest.csv} data set, modeled after Verguts and De Moor (2005).}
 \end{figure}
 
-Similar to Verguts and De Moor (2005), we are interested in whether the mean of the regression slopes (collapsed across participants by condition) depends on the type of decade pair being compared. As a first step, we can easily obtain some descriptive statistics. In JASP, click on the \enquote{Descriptives} in the ribbon at the top, then click \enquote{Descriptive Statistics} in the dropdown menu. This will open a dialogue box showing the list of variables available in our data set. Highlight \texttt{distSame} and \texttt{distDifferent}, then click the right-facing arrow to move these into the \enquote{Variables} box. Immediately, some descriptive statistics will appear on the right side of the screen under \enquote{Results}. To view the descriptives separately for the \enquote{Choose smaller} and \enquote{Choose larger} groups, we move the variable \texttt{condition} into the \enquote{Split} box (see Figure \ref{fig:ttestDescriptives}).
+Similar to Verguts and De Moor (2005), we are interested in whether the mean of the regression slopes (collapsed across participants by condition) depends on the type of decade pair being compared. As a first step, we can easily obtain some descriptive statistics. In JASP, click on the ``Descriptives'' in the ribbon at the top, then click ``Descriptive Statistics'' in the dropdown menu. This will open a dialogue box showing the list of variables available in our data set. Highlight \texttt{distSame} and \texttt{distDifferent}, then click the right-facing arrow to move these into the ``Variables'' box. Immediately, some descriptive statistics will appear on the right side of the screen under ``Results''. To view the descriptives separately for the ``Choose smaller'' and ``Choose larger'' groups, we move the variable \texttt{condition} into the ``Split'' box (see Figure \ref{fig:ttestDescriptives}).
 
 \begin{figure}
 \centering
@@ -227,13 +214,13 @@ Similar to Verguts and De Moor (2005), we are interested in whether the mean of 
 \caption{\label{fig:ttestDescriptives}JASP screenshot showing descriptive statistics, including mean and standard deviation, for the \texttt{distSame} and \texttt{distDifferent} variables, split by \texttt{condition}.}
 \end{figure}
 
-We are now ready to perform a Bayesian analysis of the simulated Verguts and De Moor (2005) data. First, since we will separately analyze the \enquote{Choose smaller} and \enquote{Choose larger} groups, we will need to apply a \emph{filter} to the data set; specifically, we will first consider only the \enquote{Choose smaller} group. There are several ways to do this in JASP, but the easiest is the \enquote{click filter}
+We are now ready to perform a Bayesian analysis of the simulated Verguts and De Moor (2005) data. First, since we will separately analyze the ``Choose smaller'' and ``Choose larger'' groups, we will need to apply a \emph{filter} to the data set; specifically, we will first consider only the ``Choose smaller'' group. There are several ways to do this in JASP, but the easiest is the ``click filter''
 \footnote{For a demonstration of the different methods of filtering in JASP, see https://jasp-stats.org/2018/06/27/how-to-filter-your-data-in-jasp/.}
-First, click the header of the \texttt{condition} column. To remove all of the \texttt{larger} trials from the analysis and retain only the \texttt{smaller} trials, we simply \enquote{turn off} the \texttt{larger} value by clicking on the check mark next to it. The check mark will be replaced by a cross, and you will be able to see that the \texttt{larger} trials have been greyed out. The filter dialog can be closed by clicking on the X on the right side of the dialog box. Notice that a funnel icon will appear next to the \texttt{condition} column header to indicate that a filter is currently being applied. Any filters can be removed by re-opening the filter dialog and clicking the eraser icon.
+First, click the header of the \texttt{condition} column. To remove all of the \texttt{larger} trials from the analysis and retain only the \texttt{smaller} trials, we simply ``turn off'' the \texttt{larger} value by clicking on the check mark next to it. The check mark will be replaced by a cross, and you will be able to see that the \texttt{larger} trials have been greyed out. The filter dialog can be closed by clicking on the X on the right side of the dialog box. Notice that a funnel icon will appear next to the \texttt{condition} column header to indicate that a filter is currently being applied. Any filters can be removed by re-opening the filter dialog and clicking the eraser icon.
 
-To perform a Bayesian one-sample \(t\)-test, click on the \enquote{T-Tests} button in the ribbon at the top, and select \enquote{Bayesian One Sample T-Test}. There are two \(t\)-tests that we wish to perform, but for clarity, we will start with describing one in detail. Before beginning, however, we define our two competing hypotheses explicitly. Since the numerical distance effect is expected to be negative, we define \(\mathcal{H}_{0}:\delta = 0\) and \(\mathcal{H}_{-}:\delta < 0\), where the minus in the subscript reminds us that the alternative is one-sided negative.
+To perform a Bayesian one-sample \(t\)-test, click on the ``T-Tests'' button in the ribbon at the top, and select ``Bayesian One Sample T-Test''. There are two \(t\)-tests that we wish to perform, but for clarity, we will start with describing one in detail. Before beginning, however, we define our two competing hypotheses explicitly. Since the numerical distance effect is expected to be negative, we define \(\mathcal{H}_{0}:\delta = 0\) and \(\mathcal{H}_{-}:\delta < 0\), where the minus in the subscript reminds us that the alternative is one-sided negative.
 
-We will first perform a \(t\)-test for the same-decade trials. From the variable list, move \enquote{distSame} over to the \enquote{Variables} box. Since the working hypothesis states that the is negative, so we choose \enquote{\(<\) Test value} from the \enquote{Alt. Hypothesis} menu. Finally, select also \enquote{Prior and posterior} from the \enquote{Plots} menu. This setup and the resulting output appears in Figure \ref{fig:ttestBayes}. There are two components of this output that we now discuss in detail: the computed Bayes factor (top of the Results pane in Figure \ref{fig:ttestBayes}) and the plot of the prior and posterior for the effect size parameter \(\delta\) (bottom of the Results pane in Figure \ref{fig:ttestBayes}).
+We will first perform a \(t\)-test for the same-decade trials. From the variable list, move ``distSame'' over to the ``Variables'' box. Since the working hypothesis states that the is negative, so we choose ``\(<\) Test value'' from the ``Alt. Hypothesis'' menu. Finally, select also ``Prior and posterior'' from the ``Plots'' menu. This setup and the resulting output appears in Figure \ref{fig:ttestBayes}. There are two components of this output that we now discuss in detail: the computed Bayes factor (top of the Results pane in Figure \ref{fig:ttestBayes}) and the plot of the prior and posterior for the effect size parameter \(\delta\) (bottom of the Results pane in Figure \ref{fig:ttestBayes}).
 
 \begin{figure}
 \centering
@@ -241,13 +228,13 @@ We will first perform a \(t\)-test for the same-decade trials. From the variable
 \caption{\label{fig:ttestBayes}JASP screenshot showing the Bayesian one-sample \(t\)-test for \texttt{distSame}.}
 \end{figure}
 
-The Bayes factor is \(BF_{-0}=9.027\), which indicates that the observed data are approximately 9 times more likely under the alternative hypothesis \(\mathcal{H}_{1}\) than under the null hypothesis \(\mathcal{H}_{0}\). According to the convention of Jeffreys (1961), this is considered \enquote{moderate} evidence for \(\mathcal{H}_{1}\), which states that the true population effect \(\delta\) (from which our participants' regression slopes are drawn) is negative. A useful visual display of this Bayes factor is provided in the plot in the bottom of the Results pane. This probability wheel (or \enquote{pizza plot}) depicts the Bayes factor as an odds ratio of 9:027-to-1 in favor of \(\mathcal{H}_{1}\) over the null.
+The Bayes factor is \(BF_{-0}=9.027\), which indicates that the observed data are approximately 9 times more likely under the alternative hypothesis \(\mathcal{H}_{1}\) than under the null hypothesis \(\mathcal{H}_{0}\). According to the convention of Jeffreys (1961), this is considered ``moderate'' evidence for \(\mathcal{H}_{1}\), which states that the true population effect \(\delta\) (from which our participants' regression slopes are drawn) is negative. A useful visual display of this Bayes factor is provided in the plot in the bottom of the Results pane. This probability wheel (or ``pizza plot'') depicts the Bayes factor as an odds ratio of 9:027-to-1 in favor of \(\mathcal{H}_{1}\) over the null.
 \footnote{To simplify matters, we identify the hypotheses to the models and use the notation \( \mathcal{H}_{k} \) interchangeably with \( \mathcal{M}_{k} \) for the \( k \)th model.}
 The bottom plot shows this in more detail. The dashed line depicts the aforementioned Cauchy prior (with a default scale/prior width of \(r=1/\sqrt{2} = 0.707\)) on the population effect size \(\delta\), but restricted to negative values in accordance to the alternative \(\mathcal{H}_{-}\). The solid line depicts the posterior density for \(\delta\). Under the assumption that the effect cannot be positive, this density provides a measure of uncertainty about the size of the population effect \(\delta\) \emph{after} observing the data. We can see in Figure \ref{fig:ttestBayes} that the more probable values of \(\delta\) are now centered around \(\delta = -0.5\). For the testing problem, one specific value worth exploring is \(\delta=0\). Notice that relative to the prior, the \(y\)-coordinate at \(\delta=0\) in the posterior is smaller than the \(y\)-coordinate at \(\delta=0\). This reflects the fact that our posterior belief regarding \(\mathcal{H}_{0} : \delta = 0\) has decreased after data observation. In fact, it has decreased by a factor of approximately 9, which is the Bayes factor we obtained. This relationship is no accident; For the \(t\)-test the Bayes factor can be represented as the ratio of the prior and posterior on the population effect \(\delta\) evaluated at the null hypothesis \(\mathcal{H}_{0}: \delta = 0\). This fact is known as the Savage-Dickey density ratio (Wagenmakers, Lodewyckx, Kuriyal, \& Grasman, 2010).
 
 In Figure \ref{fig:ttestBayes} we are also provided information about the magnitude of \(\delta\) in the form of a 95\% credible interval of {[}-0.962, -0.110{]}. This means that if the population effect is assumed to be negative --thus, under the implicit assumption that the null is false-- then with 95\% probability, the true value of the population effect \(\delta\) is between -0.962 and -0.110. Note that while it is tempting to use this estimate as a replacement for the inference that is afforded by the Bayes factor, this approach is simply not valid. The credible interval presented here is \emph{conditional on \(\mathcal{H}_{-}\)}, so it only makes sense \emph{if} \(\mathcal{H}_{-}\) is the true model. Before interpreting the credible interval, we must perform a test to index support for \(\mathcal{H}_{-}\) over \(\mathcal{H}_{0}\). So, when reporting the credible interval, we should report the Bayes factor \emph{first}, then we can report the credible interval. Do not be tempted to report the credible interval without the Bayes factor!
 
-One last question to consider in our analysis is how sensitive the Bayes factor is to changes in the specification of the Cauchy prior on the population effect \(\delta\). Clicking the box for \enquote{Bayes factor robustness check} will help us to answer this question. Figure \ref{fig:ttestRobust} displays the result of this robustness check. As mentioned before, the default prior for \(\delta\) is a Cauchy distribution centered around \(0\) with scale (or \enquote{width}) \(r=0.707\). Figure \ref{fig:ttestRobust} depicts how the Bayes factor changes with varying values of \(r\). The plot represents the Bayes factor as a continuous function of \(r\), and the legend at the top lists the Bayes factor at four values: the value of \(r\) that produces the maximum Bayes factor, the original user-specified prior (\(r=0.707\)), a \enquote{wide} prior (\(r=1\)), and an \enquote{ultrawide} prior (\(r=\sqrt{2}=1.414\)). This plot should be interpreted holistically --across a wide range of values for the prior scale \(r\), the resulting Bayes factor ranges from 6.3 to 9, which implies that the result is quite robust.
+One last question to consider in our analysis is how sensitive the Bayes factor is to changes in the specification of the Cauchy prior on the population effect \(\delta\). Clicking the box for ``Bayes factor robustness check'' will help us to answer this question. Figure \ref{fig:ttestRobust} displays the result of this robustness check. As mentioned before, the default prior for \(\delta\) is a Cauchy distribution centered around \(0\) with scale (or ``width'') \(r=0.707\). Figure \ref{fig:ttestRobust} depicts how the Bayes factor changes with varying values of \(r\). The plot represents the Bayes factor as a continuous function of \(r\), and the legend at the top lists the Bayes factor at four values: the value of \(r\) that produces the maximum Bayes factor, the original user-specified prior (\(r=0.707\)), a ``wide'' prior (\(r=1\)), and an ``ultrawide'' prior (\(r=\sqrt{2}=1.414\)). This plot should be interpreted holistically --across a wide range of values for the prior scale \(r\), the resulting Bayes factor ranges from 6.3 to 9, which implies that the result is quite robust.
 
 \begin{figure}
 \centering
@@ -255,7 +242,7 @@ One last question to consider in our analysis is how sensitive the Bayes factor 
 \caption{\label{fig:ttestRobust}JASP screenshot showing a Bayes factor robustness check for the one-sample \(t\)-test on \texttt{distSame}.}
 \end{figure}
 
-Now we are ready to perform a Bayesian \(t\)-test for the different-decade trials. Recall that these were the critical trials for Verguts and De Moor (2005), as a null numerical distance effect would lend support for a strictly decomposed model of two-digit number processing. We perform this test in an identical manner to the previous test, with one exception. After moving the variable \texttt{distDifferent} to the \enquote{Variables} list, we select \(\textnormal{BF}_{01}\) from the \enquote{Bayes Factor} menu. Note that this is not strictly necessary to perform the analysis, but doing so will cast our Bayes factor in terms of support for our working hypothesis \(\mathcal{H}_{0}\) over \(\mathcal{H}_{-}\). The result is shown in Figure \ref{fig:ttestBayes2}. We obtain \(\textnormal{BF}_{0-}=7.595\), indicating that our data are approximately 7.5 times more likely under \(\mathcal{H}_{0}\) than \(\mathcal{H}_{-}\). This shows some evidence that the true population effect \(\delta\), from which our synthethic data were generated, is equal to 0. As we can see in Figure \ref{fig:ttestBayes2}, our posterior belief that \(\delta=0\) has \emph{increased} relative to our prior belief that \(\delta=0\), specifically by a factor of 7.595.
+Now we are ready to perform a Bayesian \(t\)-test for the different-decade trials. Recall that these were the critical trials for Verguts and De Moor (2005), as a null numerical distance effect would lend support for a strictly decomposed model of two-digit number processing. We perform this test in an identical manner to the previous test, with one exception. After moving the variable \texttt{distDifferent} to the ``Variables'' list, we select \(\textnormal{BF}_{01}\) from the ``Bayes Factor'' menu. Note that this is not strictly necessary to perform the analysis, but doing so will cast our Bayes factor in terms of support for our working hypothesis \(\mathcal{H}_{0}\) over \(\mathcal{H}_{-}\). The result is shown in Figure \ref{fig:ttestBayes2}. We obtain \(\textnormal{BF}_{0-}=7.595\), indicating that our data are approximately 7.5 times more likely under \(\mathcal{H}_{0}\) than \(\mathcal{H}_{-}\). This shows some evidence that the true population effect \(\delta\), from which our synthethic data were generated, is equal to 0. As we can see in Figure \ref{fig:ttestBayes2}, our posterior belief that \(\delta=0\) has \emph{increased} relative to our prior belief that \(\delta=0\), specifically by a factor of 7.595.
 
 \begin{figure}
 \centering
@@ -265,9 +252,9 @@ Now we are ready to perform a Bayesian \(t\)-test for the different-decade trial
 
 It is again important to note that the 95\% credible interval that is displayed in the figure is conditional on \(\mathcal{H}_{-}\). In other words, it only makes sense if \(\mathcal{H}_{-}\) is the true model. However, in this case, we have moderate evidence that \(\mathcal{H}_{0}\) is the true model, so we can ignore this credible interval. Conditioned on the null \(\mathcal{H}_{0}\) our best guess for size of the effect would simply be \(\delta = 0\). It is also worth mentioning that there might be some confusion present when to take this credible interval at face value. Some might argue that since the credible interval does not contain 0 (its right endpoint is -0.004), this is actually evidence for \(\mathcal{H}_{-}\). However, this is simply not true. The apparent paradox lies in how the credible interval is computed; in JASP the 95\% credible interval is computed as the \emph{central} 95\% of the mass of the posterior for \(\delta\). Since there is no posterior mass to the right of \(\delta=0\), this central portion of the posterior must necessarily be contained strictly to the left of \(\delta=0\), thus producing the right end point that is slightly less than \(\delta=0\). However, if we were to instead specify the credible interval as 95\% of the posterior distribution with \emph{highest density}, the resulting credible interval would contain \(\delta=0\). Currently, this functionality is not available in JASP, so great care must be taken in interpreting the credible interval for \(\delta\) based on restricted priors.
 
-What is important to realize is that a test addresses a different question than an estimation. The Bayes factor focuses on the question \enquote{Does the effect exist?}, whereas the posterior focuses on the question \enquote{If it exists, then how large is it?}. This is why the (Bayesian) testing problem compares the model where the population effect is fixed at zero against one where it is free to vary. Once the data have convinced us that the population effect \(\delta\) varies freely, only then would we be interested in the magnitude of the effect.
+What is important to realize is that a test addresses a different question than an estimation. The Bayes factor focuses on the question ``Does the effect exist?'', whereas the posterior focuses on the question ``If it exists, then how large is it?''. This is why the (Bayesian) testing problem compares the model where the population effect is fixed at zero against one where it is free to vary. Once the data have convinced us that the population effect \(\delta\) varies freely, only then would we be interested in the magnitude of the effect.
 
-We can follow the same steps described above on the participants who were assigned to the \enquote{choose larger} condition. The inference is largely the same. For same decade trials, we obtain \(\textnormal{BF}_{-0}=7.543\), indicating that the data are approximately 7.5 times more likely under \(\mathcal{H}_{-}\) than under \(\mathcal{H}_{0}\). This provides some evidence that the true population effect \(\delta\) is negative, which is indicative of a negative numerical distance effect. For different decade trials, the inference is less clear; we obtain \(\textnormal{BF}_{0-}=1.893\), indicating that the observed data are approximately 2 times more likely under \(\mathcal{H}_{0}\) than under \(\mathcal{H}_{-}\). The progression of the Bayes factor is visualized in Figure \ref{fig:ttestSequential}, which was obtained by selecting the \enquote{Sequential analysis} option. This plot shows how the Bayes factor changes sequentially as each data point is added, starting from \(\textnormal{BF}_{0-}=1\) (no preference for either model) at \(n=1\) to the obtained Bayes factor of \(\textnormal{BF}_{01}=1.893\) at \(n=20\). As can be seen in Figure \ref{fig:ttestSequential}, the incoming data were first better predicted by \(\mathcal{H}_{-}\) than by \(\mathcal{H}_{0}\), with the Bayes factor \enquote{crossing over} to support for \(\mathcal{H}_{0}\) at the 20th participant. Certainly, this shows that we should be quite reserved about our conclusions at this point. In fact, if these were real data, we might prefer to continue sampling additional participants until the Bayes factor stabilizes. In general, when the population effect is truly non-zero the Bayes factor in favor of the alternative grows fast (i.e., exponentially in \(n\)). On the other if the population effect is actually zero, then the evidence for the null grows slowly (i.e., as a square root in \(n\)); see for instance Bahadur and Bickel (2009) and Johnson and Rossell (2010).
+We can follow the same steps described above on the participants who were assigned to the ``choose larger'' condition. The inference is largely the same. For same decade trials, we obtain \(\textnormal{BF}_{-0}=7.543\), indicating that the data are approximately 7.5 times more likely under \(\mathcal{H}_{-}\) than under \(\mathcal{H}_{0}\). This provides some evidence that the true population effect \(\delta\) is negative, which is indicative of a negative numerical distance effect. For different decade trials, the inference is less clear; we obtain \(\textnormal{BF}_{0-}=1.893\), indicating that the observed data are approximately 2 times more likely under \(\mathcal{H}_{0}\) than under \(\mathcal{H}_{-}\). The progression of the Bayes factor is visualized in Figure \ref{fig:ttestSequential}, which was obtained by selecting the ``Sequential analysis'' option. This plot shows how the Bayes factor changes sequentially as each data point is added, starting from \(\textnormal{BF}_{0-}=1\) (no preference for either model) at \(n=1\) to the obtained Bayes factor of \(\textnormal{BF}_{01}=1.893\) at \(n=20\). As can be seen in Figure \ref{fig:ttestSequential}, the incoming data were first better predicted by \(\mathcal{H}_{-}\) than by \(\mathcal{H}_{0}\), with the Bayes factor ``crossing over'' to support for \(\mathcal{H}_{0}\) at the 20th participant. Certainly, this shows that we should be quite reserved about our conclusions at this point. In fact, if these were real data, we might prefer to continue sampling additional participants until the Bayes factor stabilizes. In general, when the population effect is truly non-zero the Bayes factor in favor of the alternative grows fast (i.e., exponentially in \(n\)). On the other if the population effect is actually zero, then the evidence for the null grows slowly (i.e., as a square root in \(n\)); see for instance Bahadur and Bickel (2009) and Johnson and Rossell (2010).
 
 \begin{figure}
 \centering
@@ -276,37 +263,42 @@ We can follow the same steps described above on the participants who were assign
 \end{figure}
 
 \hypertarget{example-2-a-bayesian-linear-regression}{%
-\subsection{Example 2: a Bayesian linear regression}\label{example-2-a-bayesian-linear-regression}}
+\section{Example 2: a Bayesian linear regression}\label{example-2-a-bayesian-linear-regression}}
 
-We use an example inspired by Holloway and Ansari (2009), who examined the relationship between basic numerical processing and higher mathematical skills in children. Specifically, they examined whether childrens' mathematical achievement scores were related to their ability to compare symbolic and nonsymbolic number magnitudes. In this example, we will recreate one specific component of their analysis; namely, we will use Bayesian linear regression to examine the extent to which mathematical fluency scores are predicted by childrens' standardized symbolic and nonsymbolic distance effects, calculated by subtracting mean RTs for large numerical distances from mean RTs for small numerical distances and then dividing by the mean RT for large distances.
+We use an example inspired by Holloway and Ansari (2009), who examined the relationship between basic numerical processing and higher mathematical skills in children. Specifically, they examined whether childrens' mathematical achievement scores were related to their ability to compare symbolic and nonsymbolic number magnitudes. In this example, we will recreate one specific component of their analysis; namely, we will use Bayesian linear regression to examine the extent to which mathematical fluency scores are predicted by childrens' standardized symbolic and nonsymbolic distance effects. To operationalize these effects, Holloway and Ansari (2009) subtracted the mean RT for large numerical distances from the mean RT for small numerical distances, and then standardized across individuals by dividing the resulting RT difference by the mean RT for large distances.
 In their original paper, Holloway and Ansari (2009) found that the childrens' symbolic distance effect was a significant predictor of fluency, \(\beta = -0.236\), \(p<0.05\), whereas the nonsymbolic distance effect did not predict fluency, \(\beta=0.063\), \(p>0.05\).
 
-The questions we would like to address here are (1) \enquote{Which out of these two covariates predict fluency score?}, and (2) \enquote{How large is the effect of each covariate \(y_{i}\)?}. Note that the first question can be answered by (a) neither symbolic nor nonsymbolic, (b) only symbolic, (c) only nonsymbolic, and (d) both symbolic and nonsymbolic distance effects predict fluency score. Equivalently, these answers correspond to the hypotheses that the regression coefficients (a') of both symbolic and nonsymbolic, (b') of nonsymbol is zero, (c') of symbolic, and (d') of neither is zero. Hence, the first question is the testing problem, whereas the second question deals with the estimation problem.
+The questions we would like to address here are (1) ``Which out of these two covariates (\(x_{1}=\text{ symbolic distance effect}\) and \(x_{2}=\text{ nonsymbolic distance effect}\)) predict fluency score?'', and (2) ``How large is the effect \(\beta_i\) of each covariate \(x_{i}\)?''. Note that the first question can be answered by (a) neither symbolic nor nonsymbolic, (b) only symbolic, (c) only nonsymbolic, and (d) both symbolic and nonsymbolic distance effects predict fluency score. Equivalently, these answers correspond to the hypotheses that the regression coefficients \(\beta_{i}\) (a') for both symbolic and nonsymbolic are equal to 0; (b') for nonsymbolic is equal to zero; (c') for symbolic is equal to zero; and (d') for neither is equal to zero. Hence, the first question is the testing problem, whereas the second question deals with the estimation problem.
 
 \hypertarget{theory-of-bayesian-linear-regression}{%
-\subsubsection{Theory of Bayesian linear regression}\label{theory-of-bayesian-linear-regression}}
+\subsection{Theory of Bayesian linear regression}\label{theory-of-bayesian-linear-regression}}
 
-\subsection{Linear regression models}
+\hypertarget{linear-regression-models}{%
+\subsubsection{Linear regression models}\label{linear-regression-models}}
 
-The technical details described here are included for completeness, but are not strictly necessary for the remainder of this section. In this subsection we elaborate on linear regression models, before we discuss the Bayesian implementation.
+As with the \(t\)-test, the technical details described here are included for completeness, but are not strictly necessary for the remainder of this section. In this subsection we elaborate on linear regression models, before we discuss the Bayesian implementation.
 
-We write \(Y_{i}\) for the continous outcome variable of the \(i\)th participant, and \(x_{i1}, x_{i2}, \ldots, x_{ip}\) for the \(i\)th participant's covariates. For the example at hand, \(Y_{i}\) represents a participant's mathematical \enquote{fluency} score, and we have \(p=2\) covariates consisting of the \(i\)th participant's measurements symbolicDE, and nonsymbolicDE.
+We write \(Y_{i}\) for the continous outcome variable of the \(i\)th participant, and \(x_{i1}, x_{i2}, \ldots, x_{ip}\) for the \(i\)th participant's covariates. For the example at hand, \(Y_{i}\) represents a participant's mathematical fluency score, and we have \(p=2\) covariates consisting of the \(i\)th participant's measurements \(x_{i1}=\text{ symbolicDE}\), and \(x_{i2}=\text{ nonsymbolicDE}\).
 
-The difficulty here is that with \(p\) covariates there are \(2^{p}\) models. For instance with \(p=2\), we have \(2^{p} = 4\) models, which are given by is
-\begin{align}
-\mathcal{M}_{0} & : Y_{i} =\beta_{0} + \epsilon_{i}, \\
-\mathcal{M}_{1} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \epsilon_{i}, \\
-\mathcal{M}_{2} & : Y_{i} =\beta_{0} + \beta_{2} x_{i2} + \epsilon_{i}, \\
-\mathcal{M}_{3} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} + \epsilon_{i},
-\end{align}
-where \(\beta_{0}\) represents the intercept, \(\beta_{1}\) the effect of symbolicDE, \(\beta_{2}\) the effect of nonsymbolicDE on \(Y_{i}\), and \(\epsilon_{i} \sim \mathcal{N}(0, \sigma^{2})\) is a normally distributed error. Each model can be thought of as an operationalisation of a hypothesis. Note that all models include the intercept and error variance \(\sigma^{2}\) parameters, which are related to the outcome variable \(Y_{i}\). The models have 2, 3, 3 and 4 parameters. In general, the largest model will have \(p + 2\) parameters.
+The difficulty here is that with \(p\) covariates there are \(2^{p}\) models. For instance with \(p=2\), we have \(2^{p} = 4\) models, which are given by
+\begin{align*}
+\mathcal{M}_{0} & : Y_{i} =\beta_{0} + \varepsilon_{i}, \\
+\mathcal{M}_{1} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \varepsilon_{i}, \\
+\mathcal{M}_{2} & : Y_{i} =\beta_{0} + \beta_{2} x_{i2} + \varepsilon_{i}, \\
+\mathcal{M}_{3} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} + \varepsilon_{i},
+\end{align*}
+where \(\beta_{0}\) represents the intercept, \(\beta_{1}\) the effect of symbolicDE on \(Y_{i}\), \(\beta_{2}\) the effect of nonsymbolicDE on \(Y_{i}\), and \(\varepsilon_{i} \sim \mathcal{N}(0, \sigma^{2})\) is a normally distributed error. Each model can be thought of as an operationalisation of a hypothesis. Note that all models include the intercept and error variance \(\sigma^{2}\) parameters, which are related to the outcome variable \(Y_{i}\). The models \(\mathcal{M}_{0},\cdots,\mathcal{M}_{3}\) have 2, 3, 3 and 4 parameters, respectively. In general, the largest model will have \(p + 2\) parameters.
 
-All models decompose \(Y_{i}\) into a structural and a noise part. For the null model all the structure is given by the intercept \(\beta_{0}\), whereas in \(\mathcal{M}_{1}, \mathcal{M}_{2}\) and \(\mathcal{M}_{3}\) the intercept \(\beta_{0}\) competes with the covariates to predict \(Y_{i}\). Hence, despite terms being denoted with the same symbol, such as the intercepts \(\beta_{0}\), they have a different impact on \(Y_{i}\) depending on the context given by the model. As such, the question whether symbolicDE has an effect on fluency depends on the particular models that are being compared.
+All models decompose \(Y_{i}\) into two parts: a part that is structural, and a part that is simply noise. For the null model, all the structure is given by the intercept \(\beta_{0}\), whereas in \(\mathcal{M}_{1}, \mathcal{M}_{2}\) and \(\mathcal{M}_{3}\) the intercept \(\beta_{0}\) competes with the covariates to predict \(Y_{i}\). Hence, despite terms being denoted with the same symbol, such as the intercepts \(\beta_{0}\), they have a different impact on \(Y_{i}\) depending on the context given by the model. As such, the question whether symbolicDE has an effect on fluency depends on the particular models that are being compared.
 
-\subsection{Bayesian linear regression}
+\hypertarget{bayesian-linear-regression}{%
+\subsubsection{Bayesian linear regression}\label{bayesian-linear-regression}}
 
-To avoid this problem, we exploit the flexibility of Bayesian methods, and address questions such as whether symbolicDE has an effect on fluency by averaging across all models considered. To model average we require weights, and for simplicity we assume that all models are equal probable a priori. In other words, we put a uniform prior on the models, and because we have four models each model gets a prior model probability of \(1/ 4=0.25\). The following table provides a summary
+To avoid this problem, we exploit the flexibility of Bayesian methods, and address questions such as whether symbolicDE has an effect on fluency by averaging across all models considered. To model average we require weights, and for simplicity we assume that all models are equally probable a priori. In other words, we put a uniform prior on the models, and because we have four models each model gets a prior model probability of \(1/4=0.25\). Table \ref{tabLinreg} provides a summary of this information.
 
+\begin{table}
+\label{tabLinreg} 
+\caption{List of all models with the two potential predictors and the prior model probability of each model. A "1" indicates that the predictor is active in model, whereas a "0" implies that the predictor is inactive.}
 \begin{center}
 \begin{tabular}{rllll}
 \hline
@@ -319,15 +311,16 @@ Model & symbolicDE & nonsymbolicDE & \( P(\mathcal{M}) \) \\
 \hline
 \end{tabular}
 \end{center}
+\end{table}
 
 The a priori probability of the relevance of the covariate symbolicDE on \(Y_{i}\) is given by aggregating the probabilities of the models \(\mathcal{M}_{1}\) and \(\mathcal{M}_{3}\), thus, 50\%. Similarly, the a priori relevance of the covariate nonsymbolicDE is also 50\%, whereas the a priori probability of both symbolicDE and nonsymbolicDE having an impact on \(Y_{i}\) is only given by \(P(\mathcal{M}_{3}) = 0.25\).
 
-To compute the relevance of each covariate \textbf{after} data observation, we simply replace the prior model probabilities in the table by the posterior model probabilities. These are calculated using a generalisation of Equation\textasciitilde{}\{\eqref{eqPriorToPosterior}\} and specifies that the posterior model probability for model \(k=0, 1, \ldots p-1 = 3\) is given by
-\begin{align}
+To compute the relevance of each covariate \textbf{after} data observation, we simply replace the prior model probabilities in the table by the posterior model probabilities. These are calculated using a generalisation of Equation \eqref{eqPriorToPosterior} which specifies that the posterior model probability for model \(k=0, 1, \ldots p-1 = 3\) is given by
+\begin{equation}
 \label{eqPriorToPosteriorGeneral}
 P(\mathcal{M}_{k} \mid d) = \frac{ \textnormal{BF}_{k0}(d) P(\mathcal{M}_{k})}{ \sum_{k=0}^{p-1} \textnormal{BF}_{k0}(d) P(\mathcal{M}_{k})},
-\end{align}
-where the comparison between the null model and itself is defined as \(\textnormal{BF}_{00}(d) = 1\) regardless of the data. Suppose that the model \(\mathcal{M}_{k}\) has \(l \leq p\) active covariates, then for the Bayes factor \(\textnormal{BF}_{k0}\), we need to choose a prior on \(l + 2\) parameters for \(\mathcal{M}_{k}\) and a prior on \(2\) parameters for \(\mathcal{M}_{0}\). Zellner and Siow (1980) proposed to use essentially the same priors Jeffreys's used for his Bayesian \(t\)-test. This connection is made explicit by exploiting the assumption of normally distributed errors to rewrite the linear regression models as the following normal means models:
+\end{equation}
+where the comparison between the null model and itself is defined as \(\textnormal{BF}_{00}(d) = 1\) regardless of the data. Now, suppose that the model \(\mathcal{M}_{k}\) has \(l \leq p\) active covariates. Then for the Bayes factor \(\textnormal{BF}_{k0}\), we need to choose a prior on \(l + 2\) parameters for \(\mathcal{M}_{k}\) and a prior on \(2\) parameters for \(\mathcal{M}_{0}\). Zellner and Siow (1980) proposed to use essentially the same priors Jeffreys's used for his Bayesian \(t\)-test. This connection is made explicit by exploiting the assumption of normally distributed errors to rewrite the linear regression models as the following normal means models:
 \begin{align}
 \label{eqLinRegAsNormal0}
 \mathcal{M}_{0} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0}, \sigma^{2}), \\
@@ -338,18 +331,18 @@ where the comparison between the null model and itself is defined as \(\textnorm
 \end{align}
 where \(Y_{i} \, | \, x_{i}\) refers to the outcome variable given the covariates \(x_{i}\).
 
-More explicit, the Bayes factor \(\textnormal{BF}_{k0}\), where \(\mathcal{M}_{k}\) has \(l\) active covariates, uses a \enquote{uninformative} prior on the nuisance parameter \(\beta_{0}\) and \(\sigma\) in both models, and for the \(\mathcal{M}_{k}\) an additional \(l\)-dimensional multivariate Cauchy prior on the vector of population effect sizes \(\delta\). The vector of effect sizes is defined by rescaling the vector of active \(\beta\) coefficients with respect to \(\sigma\), but also with respect to the covariates. More explicitly, when \(l=1\), say, only \(\beta_{2}\) is active then the effect size parameter is given by \(\delta = \beta_{2} s_{x_{2}}/\sigma\), where \(s_{x_{2}}\) is observed standard error of the second covariate. If the second covariate is standardised, then \(s_{x_{2}} = 1\), and we get the same definition of effect size as in the \(t\)-test, but with \(\mu\) replaced by \(\beta_{2}\). Furthermore, with \(l = 1\), the prior on \(\delta\) is than a \(1\)-dimensional Cauchy distribution, indeed, the same one we would use in the \(t\)-test.
+More explicitly, the Bayes factor \(\textnormal{BF}_{k0}\), where \(\mathcal{M}_{k}\) has \(l\) active covariates, uses an ``uninformative'' prior on the nuisance parameter \(\beta_{0}\) and \(\sigma\) in both models, and for the \(\mathcal{M}_{k}\) an additional \(l\)-dimensional multivariate Cauchy prior on the vector of population effect sizes \(\delta\). The vector of effect sizes is defined by rescaling the vector of active \(\beta\) coefficients with respect to \(\sigma\), but also with respect to the covariates. More explicitly, when \(l=1\), say, only \(\beta_{2}\) is active then the effect size parameter is given by \(\delta = \beta_{2} s_{x_{2}}/\sigma\), where \(s_{x_{2}}\) is observed standard error of the second covariate. If the second covariate is standardised, then \(s_{x_{2}} = 1\), and we get the same definition of effect size as in the \(t\)-test, but with \(\mu\) replaced by \(\beta_{2}\). Furthermore, with \(l = 1\), the prior on \(\delta\) is than a \(1\)-dimensional Cauchy distribution, indeed, the same one we would use in the \(t\)-test.
 
-The rescaling with respect to the covariates is necessary to make the Bayes factor independent of the unit of measurements of the covariates, whereas the rescaling and uninformative prior on \(\beta_{0}\) and \(\sigma\) makes the Bayes factor independent on the unit of measurement of \(Y_{i}\). The Bayes factors for linear regression also retains other desirable properties of the Bayesian \(t\)-test, see Rouder and Morey (2012), Liang et al. (2008) and Bayarri et al. (2012) for more details, and Li and Clyde (2018) for further extensions.
+The rescaling with respect to the covariates is necessary to make the Bayes factor independent of the unit of measurements of the covariates, whereas the rescaling and uninformative prior on \(\beta_{0}\) and \(\sigma\) makes the Bayes factor independent on the unit of measurement of \(Y_{i}\). The Bayes factors for linear regression also retains other desirable properties of the Bayesian \(t\)-test; see Rouder and Morey (2012), Liang et al. (2008) and Bayarri et al. (2012) for more details, and Li and Clyde (2018) for further extensions.
 
-With both the prior model probabilities and the Bayes factor at hand \eqref{eqPriorToPosteriorGeneral} now provides the posterior model probabilities. Once the latter are computed, the posterior relevance of each covariate can be assessed as we have done in Table\textasciitilde{}\{\ref{tabLinreg}\}. We elaborate on this procedure with the example.
+With both the prior model probabilities and the Bayes factor at hand \eqref{eqPriorToPosteriorGeneral} now provides the posterior model probabilities. Once the latter are computed, the posterior relevance of each covariate can be assessed as we have done in Table \ref{tabLinreg}. We elaborate on this procedure with the example.
 
 \hypertarget{implementation-in-jasp-1}{%
-\subsubsection{Implementation in JASP}\label{implementation-in-jasp-1}}
+\subsection{Implementation in JASP}\label{implementation-in-jasp-1}}
 
 After downloading the file \texttt{regression.csv} from the Github repository (\url{https://git.io/JeXui}), open the file in JASP. This will reveal a data set with three variables: \texttt{symbolicDE}, representing the standardized distance effect measure for the symbolic number comparison task; \texttt{nonsymbolicDE}, representing the standardized distance effect measure for the nonsymbolic comparison task; and \texttt{fluency}, representing the mathematics fluency score.
 
-To perform the Bayesian linear regression, we click the \enquote{Regression} button and select \enquote{Bayesian Linear Regression}. We then move the \texttt{fluency} variable to the \enquote{Dependent Variable} box and we move both the \texttt{symbolicDE} and \texttt{nonsymbolicDE} variables to the \enquote{Covariates} box. Before interpreting the output, we will select one more option that is found in the \enquote{Advanced Options}, but will actually simplify our discussion for this tutorial. Under \enquote{Model Prior}, select \enquote{Uniform}. The output can be seen in Figure \ref{fig:regression1}.
+To perform the Bayesian linear regression, we click the ``Regression'' button and select ``Bayesian Linear Regression''. We then move the \texttt{fluency} variable to the ``Dependent Variable'' box and we move both the \texttt{symbolicDE} and \texttt{nonsymbolicDE} variables to the ``Covariates'' box. We will leave the basic defaults in place except for two. First, select ``Posterior summary'' under ``Output''. Also, we will select one more option that is found in the ``Advanced Options'', but will actually simplify our discussion for this tutorial. Under ``Model Prior'', select ``Uniform''. The output can be seen in Figure \ref{fig:regression1}.
 
 \begin{figure}
 \centering
@@ -374,22 +367,30 @@ Finally, the fourth column, \(\textnormal{BF}_{10}\), lists the Bayes factor for
 \footnote{It is easy to compute the Bayes factor with respect to the most probable model, once we have the Bayes factor with respect to the null model. Let \( \textnormal{BF}_{10}, \textnormal{BF}_{20}, \textnormal{BF}_{30} \) be the Bayes factors with respect to the null model. Recall that in our case model \( \mathcal{M}_{1} \) is the best model. The Bayes factor \( \textnormal{BF}_{31} =\textnormal{BF}_{30} \textnormal{BF}_{01} \), where \( \textnormal{BF}_{01}= 1/\textnormal{BF}_{10} \).}
 This is a very useful column for doing specific model comparisons. For example, we can use this column to directly compare the two most probable models, \(\mathcal{M}_{1}\) and \(\mathcal{M}_{3}\). In the results table, we see that the Bayes factor for the \(\mathcal{M}_{3}\) compared to the best fitting model \(\mathcal{M}_{1}\) is 0.411. Taking reciprocals, this tells us that the Bayes factor for \(\mathcal{M}_{1}\) over \(\mathcal{M}_{3}\) is \(1/0.411 = 2.43\). In other words, the observed data are approximately 2.5 times more likely under the model where fluency is predicted only by the symbolic distance effect compared to the model where fluency is predicted by both symbolic and nonsymbolic distance effects. Another way of saying this is that we have positive evidence for excluding nonsymbolic distance effect as a predictor of mathematical fluency once we already accepted symbolic distance effect as a predictor.
 
+Once we have positive evidence for \(\mathcal{M}_{1}\), which posits only symbolicDE as a predictor of fluency, we can move to the problem of estimation. To this end, we focus on the ``Posterior Summary'' output of Figure \ref{fig:regression1}. This table provides model averaged posterior summaries of the regression coefficients \(\beta_{0}\) (the intercept), \(\beta_{1}\) (the coefficient of symbolicDE), and \(\beta_{2}\) (the coefficient of nonsymbolicDE). Before interpreting the output, however, there are some subtle details that we should discuss. As mentioned earlier in the \(t\)-test example, any estimation that we present is conditional on \emph{some} model. However, in this example, we have four models to consider. So, how to proceed? One approach is to employ Bayesian model averaging, which JASP performs by default. Basically, it works as follows. Rather than estimating a parameters conditioned on one specific model, JASP calculates an \emph{unconditional} posterior distribution for the parameter. That is, we factor in both the uncertainty about the parameter within any one particular model \emph{and} the uncertainty about the models themselves. We think this is a good approach to estimation, as it alleviates the need for the researcher to pick one model as ``the winner'', and instead, provides estimates that incorporate both levels of uncertainty (within models and across models).
+
+Given this background, let us interpret the Posterior Summary table in \ref{fig:regression1}. First, the table provides estimates of mean and standard deviation for the three coefficients, as well as 95\% credible intervals. Moreover, the table provides ``inclusion probabilities'', which provide prior and posterior probabilties of including each predictor as a component of the linear model. We can take a look at these in more detail. First, let us focus on \(P(\text{incl})\), the prior inclusion probability for each predictor. These are based on the prior model probabilities that we chose in Table \ref{tabLinreg}. Since the intercept \(\beta_{0}\) was included in each of the 4 models, and each model \(\mathcal{M}_{k}\) had prior probability 0.25, the prior probability of including the intercept \(\beta_{0}\) is equal to \(4(0.25) = 1\). On the other hand, only two of the models (\(\mathcal{M}_{1}\) and \(\mathcal{M}_{3}\)) included the predictor symbolicDE. Since each of these models had prior probability 0.25, the prior probability of including the predictor symbolicDE is equal to \(2(0.25) = 0.5\). A similar argument shows the same prior probability for the predictor nonsymbolicDE.
+
+After observing data, we can calculate the posterior inclusion probabilities \(P(\text{incl}\mid \text{data})\). This can be done easily by considering the posterior probability of each model in the ``Model Comparison'' table of Figure \ref{fig:regression1}. The intercept is in each of the models, so summing the posterior probabilities for all four models produces \(P(\text{incl}\mid \text{data}) = 1\). For symbolicDE, we sum the posterior probabilities for \(\mathcal{M}_{1}\) and \(\mathcal{M}_{3}\), which gives \(P(\text{incl}\mid \text{data}) = 0.704 + 0.289 = 0.993\). Finally, for nonsymbolicDE, we sum the posterior probabilities for \(\mathcal{M}_{2}\) and \(\mathcal{M}_{3}\), giving \(P(\text{incl}\mid \text{data}) = 0.289 + 0.001 = 0.290\).
+
+Using these posterior inclusion probabilities, we can calculate an ``inclusion Bayes factor'', which is defined as the factor by which the prior odds for including a specific predictor are increased after observing data. For example, the prior odds for including symbolicDE is equal to 0.5/(1-0.5) = 1, and the posterior odds is equal to 0.993/(1-0.993) = 138.27. Thus, the odds have increased by a factor of 138.27/1 = 138.27. Similarly, the prior odds for including nonsymbolicDE as a predictor is equal to 1, whereas the posterior odds is equal to 0.290/(1-.290) = 0.409. We can interpret this Bayes factor less than one via the reciprocal by reporting that the odds of including have \emph{decreased} after observing data by a factor of 1/0.409 = 2.45.
+
 \hypertarget{example-3-a-factorial-analysis-of-variance}{%
-\subsection{Example 3: a factorial analysis of variance}\label{example-3-a-factorial-analysis-of-variance}}
+\section{Example 3: a factorial analysis of variance}\label{example-3-a-factorial-analysis-of-variance}}
 
 In our final example, we demonstrate a Bayesian factorial analysis of variance. To do this, we use a data set based on Campbell and Fugelsang (2001), who investigated the effects of problem size and numerical surface form on response times in an addition verification task. Not only did they find the usual effects of problem size (small problems are solved faster than large problems) and problem format (digit problems are solved faster than word problems), but they also found an interaction between size and format; specifically, the problem size effect was larger for problems in word format than for problems in digit format. This interaction was interpreted as support for an \emph{interaction} model of mental arithmetic, where factors that influence encoding processes (e.g., surface format) also directly influence calculation processes.
 
 \hypertarget{theory-of-bayesian-analysis-of-variance}{%
-\subsubsection{Theory of Bayesian analysis of variance}\label{theory-of-bayesian-analysis-of-variance}}
+\subsection{Theory of Bayesian analysis of variance}\label{theory-of-bayesian-analysis-of-variance}}
 
 explain how Bayesian anova works (at least enough to understand the basic options that JASP provides)
 
 \hypertarget{implementation-in-jasp-2}{%
-\subsubsection{Implementation in JASP}\label{implementation-in-jasp-2}}
+\subsection{Implementation in JASP}\label{implementation-in-jasp-2}}
 
-The simulated data based on this experiment can be found in the \texttt{anova.csv} file on Github. Loading this file into JASP, we can see four variables: \texttt{subject}, which encodes the subject number (1-48); \texttt{size}, which encodes problem size as either \enquote{small} or \enquote{large}; \texttt{format}, which encodes problem format as either \enquote{digit} or \enquote{word} , and \texttt{rt}, which represents the mean response time (in milliseconds) of correct trials for the given combination of subject, size, and format. Note that for the Bayesian analysis of variance we are about to perform, we will need to specify that \texttt{subject} is a nominal variable; to do this, simply click on the measurement level icon to the left of the variable name (the ruler) and select \enquote{Nominal} from the pop up menu.
+The simulated data based on this experiment can be found in the \texttt{anova.csv} file on Github. Loading this file into JASP, we can see four variables: \texttt{subject}, which encodes the subject number (1-48); \texttt{size}, which encodes problem size as either ``small'' or ``large''; \texttt{format}, which encodes problem format as either ``digit'' or ``word'' , and \texttt{rt}, which represents the mean response time (in milliseconds) of correct trials for the given combination of subject, size, and format. Note that for the Bayesian analysis of variance we are about to perform, we will need to specify that \texttt{subject} is a nominal variable; to do this, simply click on the measurement level icon to the left of the variable name (the ruler) and select ``Nominal'' from the pop up menu.
 
-To perform a Bayesian analysis of variance, we click the button for the \enquote{ANOVA} module and select \enquote{Bayesian ANOVA} from the menu. Then, we move the \texttt{rt} variable to the \enquote{Dependent variable} box, the \texttt{size} and \texttt{format} variables to the \enquote{Fixed Factors} box. Note that since these simulated data are from a repeated measures design, we will also need to tell JASP that \texttt{subject} is a random factor; thus we simply move this variable to the \enquote{Random Factors} box. There are many other options we could select, but for now, let us choose \enquote{Effects} and \enquote{Descriptives}. The result is shown in Figure \ref{fig:anovaBayes}.
+To perform a Bayesian analysis of variance, we click the button for the ``ANOVA'' module and select ``Bayesian ANOVA'' from the menu. Then, we move the \texttt{rt} variable to the ``Dependent variable'' box, the \texttt{size} and \texttt{format} variables to the ``Fixed Factors'' box. Note that since these simulated data are from a repeated measures design, we will also need to tell JASP that \texttt{subject} is a random factor; thus we simply move this variable to the ``Random Factors'' box. There are many other options we could select, but for now, let us choose ``Effects'' and ``Descriptives''. The result is shown in Figure \ref{fig:anovaBayes}.
 
 \begin{figure}
 \centering
@@ -415,11 +416,11 @@ As in the regression example, the third column, \(\textnormal{BF}_{M}\), gives t
 
 Finally, the fourth column, \(\textnormal{BF}_{10}\), lists the Bayes factor for a given model compared to the best fitting model (note that this is the default setting in JASP, but if desired, it can be changed by the user to instead display the Bayes factor compared to the null model). This is a very useful column for the specific model comparison that is motivated by this example, namely the comparison of the additive model \(\mathcal{M}_{3}\) to the interaction model \(\mathcal{M}_{4}\). In the results table, we see that the Bayes factor for the interaction model \(\mathcal{M}_{4}\) compared to the additive model \(\mathcal{M}_{3}\) is 0.217. Taking reciprocals, this tells us that the Bayes factor for the additive model over the interaction model is \(1/0.217 = 4.61\). In other words, the observed data are approximately 5 times more likely under the additive model than under the interaction model, giving moderate support for an additive-only model of mental arithmetic.
 
-The second table in the JASP results output simply recasts the results of the top table into a form that may translate better to researchers who are trained to think about ANOVA models as testing \enquote{effects}. If we think about the terms of the model as potential effects to test, we have three questions: do we include (1) a main effect of problem size; (2) a main effect of format; and (3) an interaction effect? This problem is cast in terms of \emph{inclusion probabilities}; i.e., what is the probability of including this term, or effect, in the best fitting model? Of course, the problem is Bayesian, so we have to think about how prior model probabilities are updated to posterior model probabilities after observing data. This information is summarized in three columns, described next.
+The second table in the JASP results output simply recasts the results of the top table into a form that may translate better to researchers who are trained to think about ANOVA models as testing ``effects''. If we think about the terms of the model as potential effects to test, we have three questions: do we include (1) a main effect of problem size; (2) a main effect of format; and (3) an interaction effect? This problem is cast in terms of \emph{inclusion probabilities}; i.e., what is the probability of including this term, or effect, in the best fitting model? Of course, the problem is Bayesian, so we have to think about how prior model probabilities are updated to posterior model probabilities after observing data. This information is summarized in three columns, described next.
 
-The first column, \(P(\text{incl})\), lists the prior probability of including a particular term in the model. We can see that the prior probability of including \enquote{size} as a term in the model is 0.6, but let's see why this is the case. Recall above that we listed 5 possible models; note also that 3 of the 5 models contained the variable \enquote{size}. Thus, the prior probability of including size in our model is 3/5 = 0.6. The other prior inclusion probabilities can be computed similarly.
+The first column, \(P(\text{incl})\), lists the prior probability of including a particular term in the model. We can see that the prior probability of including ``size'' as a term in the model is 0.6, but let's see why this is the case. Recall above that we listed 5 possible models; note also that 3 of the 5 models contained the variable ``size''. Thus, the prior probability of including size in our model is 3/5 = 0.6. The other prior inclusion probabilities can be computed similarly.
 
-The second column, \(P(\text{incl}\mid\text{data})\), gives the posterior probabilities of including a particular term in the model, after observing data. As we can see, the posterior inclusion probabilities for the effects of both problem size and format are very large (JASP reports them as 1.000). On the other hand, the posterior probability of including the interaction term actually decreases to 0.179 after observing data. The third column, \(\textnormal{BF}_{\text{incl}}\), quantifies this change as the factor by which the prior odds of including the term (i.e., \(P(\text{incl})/P(\text{not incl}))\)) have changed to posterior inclusion odds after observing data. For both effects of problem size and format, this Bayes factor is extremely large, giving us overwhelming evidence for the \enquote{effects} of problem size and format. However, the prior odds for including an interaction term have decreased from \(0.2/(1-0.2) = 0.2/0.8 = 0.25\) to posterior odds of \(0.179/(1-0.179) = 0.179/0.821 = 0.218\), a factor of \(0.218/0.25 = 0.870\).
+The second column, \(P(\text{incl}\mid\text{data})\), gives the posterior probabilities of including a particular term in the model, after observing data. As we can see, the posterior inclusion probabilities for the effects of both problem size and format are very large (JASP reports them as 1.000). On the other hand, the posterior probability of including the interaction term actually decreases to 0.179 after observing data. The third column, \(\textnormal{BF}_{\text{incl}}\), quantifies this change as the factor by which the prior odds of including the term (i.e., \(P(\text{incl})/P(\text{not incl}))\)) have changed to posterior inclusion odds after observing data. For both effects of problem size and format, this Bayes factor is extremely large, giving us overwhelming evidence for the ``effects'' of problem size and format. However, the prior odds for including an interaction term have decreased from \(0.2/(1-0.2) = 0.2/0.8 = 0.25\) to posterior odds of \(0.179/(1-0.179) = 0.179/0.821 = 0.218\), a factor of \(0.218/0.25 = 0.870\).
 
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
@@ -450,7 +451,7 @@ Bahadur, R. R., \& Bickel, P. J. (2009). An optimality property of Bayes' test s
 Bayarri, M. J., Berger, J. O., Forte, A., \& Garcia-Donato, G. (2012). Criteria for Bayesian model choice with application to variable selection. \emph{The Annals of Statistics}, \emph{40}(3), 1550--1577.
 
 \leavevmode\hypertarget{ref-campbellFugelsang2001}{}%
-Campbell, J. I. D., \& Fugelsang, J. (2001). Strategy choice for arithmetic verification: Effects of numerical surface form. \emph{Cognition}, \emph{80}(3), B21--B30. doi:\href{https://doi.org/10.1016/s0010-0277(01)00115-9}{10.1016/s0010-0277(01)00115-9}
+Campbell, J. I. D., \& Fugelsang, J. (2001). Strategy choice for arithmetic verification: Effects of numerical surface form. \emph{Cognition}, \emph{80}(3), B21--B30. \url{https://doi.org/10.1016/s0010-0277(01)00115-9}
 
 \leavevmode\hypertarget{ref-faulkenberry2019estimating}{}%
 Faulkenberry, T. J. (2019). Estimating evidential value from analysis of variance summaries: A comment on ly et al.(2018). \emph{Advances in Methods and Practices in Psychological Science}, 2515245919872960.
@@ -465,7 +466,7 @@ Grünwald, P., Heide, R. de, \& Koolen, W. (2019). Safe testing. \emph{arXiv Pre
 Hendriksen, A., Heide, R. de, \& Grünwald, P. (2018). Optional stopping with Bayes factors: A categorization and extension of folklore results, with an application to invariant situations. \emph{arXiv Preprint arXiv:1807.09077}.
 
 \leavevmode\hypertarget{ref-hollowayAnsari2009}{}%
-Holloway, I. D., \& Ansari, D. (2009). Mapping numerical magnitudes onto symbols: The numerical distance effect and individual differences in children's mathematics achievement. \emph{Journal of Experimental Child Psychology}, \emph{103}(1), 17--29. doi:\href{https://doi.org/10.1016/j.jecp.2008.04.001}{10.1016/j.jecp.2008.04.001}
+Holloway, I. D., \& Ansari, D. (2009). Mapping numerical magnitudes onto symbols: The numerical distance effect and individual differences in children's mathematics achievement. \emph{Journal of Experimental Child Psychology}, \emph{103}(1), 17--29. \url{https://doi.org/10.1016/j.jecp.2008.04.001}
 
 \leavevmode\hypertarget{ref-jaspSoftware}{}%
 JASP Team. (2019). JASP (Version 0.11.1.0){[}Computer software{]}. Retrieved from \url{https://jasp-stats.org/}
@@ -486,19 +487,19 @@ Li, Y., \& Clyde, M. A. (2018). Mixtures of g-priors in generalized linear model
 Liang, F., Paulo, R., Molina, G., Clyde, M. A., \& Berger, J. O. (2008). Mixtures of g priors for Bayesian variable selection. \emph{Journal of the American Statistical Association}, \emph{103}(481).
 
 \leavevmode\hypertarget{ref-lorch1990}{}%
-Lorch, R. F., \& Myers, J. L. (1990). Regression analyses of repeated measures data in cognitive research., \emph{16}(1), 149--157. doi:\href{https://doi.org/10.1037/0278-7393.16.1.149}{10.1037/0278-7393.16.1.149}
+Lorch, R. F., \& Myers, J. L. (1990). Regression analyses of repeated measures data in cognitive research., \emph{16}(1), 149--157. \url{https://doi.org/10.1037/0278-7393.16.1.149}
 
 \leavevmode\hypertarget{ref-ly2017replication}{}%
-Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (n.d.). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}. doi:\href{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}{https://doi.org/10.3758/s13428-018-1092-x}
+Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (n.d.). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}. \url{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}
 
 \leavevmode\hypertarget{ref-ly2017tutorial}{}%
-Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. doi:\href{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}{https://doi.org/10.1016/j.jmp.2017.05.006}
+Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. \url{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}
 
 \leavevmode\hypertarget{ref-ly2016harold}{}%
-Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}{http://dx.doi.org/10.1016/j.jmp.2015.06.004}
+Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. \url{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}
 
 \leavevmode\hypertarget{ref-moyer1967}{}%
-Moyer, R. S., \& Landauer, T. K. (1967). Time required for judgements of numerical inequality. \emph{Nature}, \emph{215}(5109), 1519--1520. doi:\href{https://doi.org/10.1038/2151519a0}{10.1038/2151519a0}
+Moyer, R. S., \& Landauer, T. K. (1967). Time required for judgements of numerical inequality. \emph{Nature}, \emph{215}(5109), 1519--1520. \url{https://doi.org/10.1038/2151519a0}
 
 \leavevmode\hypertarget{ref-rouder2012defaultRegression}{}%
 Rouder, J. N., \& Morey, R. D. (2012). Default Bayes factors for model selection in regression. \emph{Multivariate Behavioral Research}, \emph{47}(6), 877--903.
@@ -510,13 +511,12 @@ Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., \& Iverson, G. (2009). Ba
 van de Schoot, R., Winter, S. D., Ryan, O., Zondervan-Zwijnenburg, M., \& Depaoli, S. (2017). A systematic review of Bayesian articles in psychology: The last 25 years. \emph{Psychological Methods}, \emph{22}(2), 217--239.
 
 \leavevmode\hypertarget{ref-vergutsDeMoor2005}{}%
-Verguts, T., \& De Moor, W. (2005). Two-digit comparison: Decomposed, holistic, or hybrid? \emph{Experimental Psychology}, \emph{52}(3), 195--200. doi:\href{https://doi.org/10.1027/1618-3169.52.3.195}{10.1027/1618-3169.52.3.195}
+Verguts, T., \& De Moor, W. (2005). Two-digit comparison: Decomposed, holistic, or hybrid? \emph{Experimental Psychology}, \emph{52}(3), 195--200. \url{https://doi.org/10.1027/1618-3169.52.3.195}
 
 \leavevmode\hypertarget{ref-wagenmakers2010}{}%
-Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., \& Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage--Dickey method. \emph{Cognitive Psychology}, \emph{60}(3), 158--189. doi:\href{https://doi.org/10.1016/j.cogpsych.2009.12.001}{10.1016/j.cogpsych.2009.12.001}
+Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., \& Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage--Dickey method. \emph{Cognitive Psychology}, \emph{60}(3), 158--189. \url{https://doi.org/10.1016/j.cogpsych.2009.12.001}
 
 \leavevmode\hypertarget{ref-zellner1980posterior}{}%
 Zellner, A., \& Siow, A. (1980). Posterior odds ratios for selected regression hypotheses. In J. M. Bernardo, M. H. DeGroot, D. V. Lindley, \& A. F. Smith (Eds.), \emph{Bayesian statistics: Proceedings of the first international meeting held in Valencia} (Vol. 1, pp. 585--603). Springer.
-
 
 \end{document}

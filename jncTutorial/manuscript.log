@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  10 DEC 2019 14:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  12 DEC 2019 09:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -556,14 +556,93 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip69
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 35.
+Package hyperref Info: Option `breaklinks' set `true' on input line 34.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/grffile.sty
 Package: grffile 2017/06/30 v1.18 Extended file name support for graphics (HO)
 Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
 Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 494.
-) (/usr/local/texlive/2019/texmf-dist/tex/generic/babel/babel.sty
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/csquotes/csquotes.sty
+Package: csquotes 2018/04/13 v5.2d context-sensitive quotations (JAW)
+\csq@reset=\count124
+\csq@gtype=\count125
+\csq@glevel=\count126
+\csq@qlevel=\count127
+\csq@maxlvl=\count128
+\csq@tshold=\count129
+\csq@ltx@everypar=\toks25
+(/usr/local/texlive/2019/texmf-dist/tex/latex/csquotes/csquotes.def
+File: csquotes.def 2018/04/13 v5.2d csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/csquotes/csquotes.cfg
+File: csquotes.cfg 
+)) (/usr/local/texlive/2019/texmf-dist/tex/latex/was/upgreek.sty
+Package: upgreek 2003/02/12 v2.0 (WaS)
+Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
+\symugrf@m=\mathgroup9
+LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
+(Font)                  U/eur/m/n --> U/eur/b/n on input line 38.
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
+\LTleft=\skip70
+\LTright=\skip71
+\LTpre=\skip72
+\LTpost=\skip73
+\LTchunksize=\count130
+\LTcapwidth=\dimen147
+\LT@head=\box31
+\LT@firsthead=\box32
+\LT@foot=\box33
+\LT@lastfoot=\box34
+\LT@cols=\count131
+\LT@rows=\count132
+\c@LT@tables=\count133
+\c@LT@chunks=\count134
+\LT@p@ftn=\toks26
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2019/01/01 v2.4 Span multiple rows of a table
+\multirow@colwidth=\skip74
+\multirow@cntb=\count135
+\multirow@dima=\skip75
+\bigstrutjot=\dimen148
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2016/02/03 v2.11b `tabularx' package (DPC)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/tools/array.sty
+Package: array 2018/12/30 v2.4k Tabular extension package (FMi)
+\col@sep=\dimen149
+\ar@mcellbox=\box35
+\extrarowheight=\dimen150
+\NC@list=\toks27
+\extratabsurround=\skip76
+\backup@length=\skip77
+\ar@cellbox=\box36
+)
+\TX@col@width=\dimen151
+\TX@old@table=\dimen152
+\TX@old@col=\dimen153
+\TX@target=\dimen154
+\TX@delta=\dimen155
+\TX@cols=\count136
+\TX@ftn=\toks28
+)
+(/usr/local/texlive/2019/texmf-dist/tex/latex/threeparttablex/threeparttablex.s
+ty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(/usr/local/texlive/2019/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/usr/local/texlive/2019/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip78
+)
+\longtablewidth=\skip79
+Failed to patch abstract.
+(/usr/local/texlive/2019/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2019/05/04 3.31 The Babel package
 (/usr/local/texlive/2019/texmf-dist/tex/generic/babel/switch.def
 File: switch.def 2019/05/04 3.31 Babel switching mechanism
@@ -571,42 +650,48 @@ File: switch.def 2019/05/04 3.31 Babel switching mechanism
 Language: english 2017/06/06 v3.3r English support from the babel system
 (/usr/local/texlive/2019/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2019/05/04 3.31 Babel common definitions
-\babel@savecnt=\count124
-\U@D=\dimen147
+\babel@savecnt=\count137
+\U@D=\dimen156
 (/usr/local/texlive/2019/texmf-dist/tex/generic/babel/txtbabel.def)
-\bbl@dirlevel=\count125
+\bbl@dirlevel=\count138
 )
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ) (/usr/local/texlive/2019/texmf-dist/tex/generic/babel-english/english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
-)) (./manuscript.aux)
+))
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'english'.
+(./manuscript.aux)
 \openout1 = `manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 93.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 93.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 147.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 147.
+
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 93.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 147.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -646,17 +731,17 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 (/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count126
-\scratchdimen=\dimen148
-\scratchbox=\box31
-\nofMPsegments=\count127
-\nofMParguments=\count128
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count129
-\MPscratchDim=\dimen149
-\MPnumerator=\count130
-\makeMPintoPDFobject=\count131
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count139
+\scratchdimen=\dimen157
+\scratchbox=\box37
+\nofMPsegments=\count140
+\nofMParguments=\count141
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count142
+\MPscratchDim=\dimen158
+\MPnumerator=\count143
+\makeMPintoPDFobject=\count144
+\everyMPtoPDFconversion=\toks30
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -676,8 +761,12 @@ File: APAamerican.txt 2012/02/23 v1.25 apa6 configuration for American English
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2018/08/26 v1.4-95 longtable captions (AR)
+)
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 93.
+LaTeX Info: Redefining \microtypecontext on input line 147.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -691,187 +780,190 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-\AtBeginShipoutBox=\box32
-Package hyperref Info: Link coloring OFF on input line 93.
+\AtBeginShipoutBox=\box38
+Package hyperref Info: Link coloring OFF on input line 147.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count132
+\c@section@level=\count145
 )
-LaTeX Info: Redefining \ref on input line 93.
-LaTeX Info: Redefining \pageref on input line 93.
-LaTeX Info: Redefining \nameref on input line 93.
+LaTeX Info: Redefining \ref on input line 147.
+LaTeX Info: Redefining \pageref on input line 147.
+LaTeX Info: Redefining \nameref on input line 147.
 (./manuscript.out) (./manuscript.out)
 \@outlinefile=\write3
 \openout3 = `manuscript.out'.
 
-
-Class apa6 Warning: Short title not defined.
-
-
-Class apa6 Warning: Affiliation not defined.
-
-Class apa6 Info: Keywords not defined on input line 95.
+Class apa6 Info: Keywords not defined on input line 149.
 Using title for running head
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 95.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 149.
+
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 95.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 149.
+
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 95.
-
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 149
+.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 95.
-
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 149
+.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 95.
+(Font)              <14.4> on input line 149.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 95.
+(Font)              <10> on input line 149.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 95.
-LaTeX Font Info:    Try loading font information for U+msa on input line 95.
+(Font)              <7> on input line 149.
+LaTeX Font Info:    Try loading font information for U+msa on input line 149.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 95.
+LaTeX Font Info:    Try loading font information for U+msb on input line 149.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-eur.cfg
+File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 95.
+(Font)              <10.95> on input line 149.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 95.
+(Font)              <8> on input line 149.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 95.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 95.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 95.
+(Font)              <6> on input line 149.
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+
+ []
+
 [1
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-[4] [5] [6]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 201.
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 174.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 174.
+[3] [4] [5] [6]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 255.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<figures/ttestData.png, id=142, 677.53125pt x 793.96625pt>
+<figures/ttestData.png, id=139, 677.53125pt x 793.96625pt>
 File: figures/ttestData.png Graphic file (type png)
 <use figures/ttestData.png>
-Package pdftex.def Info: figures/ttestData.png  used on input line 205.
+Package pdftex.def Info: figures/ttestData.png  used on input line 259.
 (pdftex.def)             Requested size: 281.85255pt x 330.28943pt.
-<figures/ttestDescriptives.png, id=145, 1180.41pt x 749.80125pt>
+[7]
+<figures/ttestDescriptives.png, id=153, 1180.41pt x 749.80125pt>
 File: figures/ttestDescriptives.png Graphic file (type png)
 <use figures/ttestDescriptives.png>
-Package pdftex.def Info: figures/ttestDescriptives.png  used on input line 213.
+Package pdftex.def Info: figures/ttestDescriptives.png  used on input line 267.
 
 (pdftex.def)             Requested size: 390.23895pt x 247.88138pt.
 
-Underfull \hbox (badness 6893) in paragraph at lines 218--218
+Underfull \hbox (badness 6893) in paragraph at lines 272--272
 [][][]\T1/lmr/m/n/9 (+20) For a demon-stra-tion of the dif-fer-ent meth-ods of 
 fil-ter-ing in JASP, see https://jasp-
  []
 
-[7] [8 <./figures/ttestData.png>]
-<figures/ttestBayes.png, id=169, 1251.67625pt x 891.33pt>
+[8 <./figures/ttestData.png>]
+<figures/ttestBayes.png, id=165, 1251.67625pt x 891.33pt>
 File: figures/ttestBayes.png Graphic file (type png)
 <use figures/ttestBayes.png>
-Package pdftex.def Info: figures/ttestBayes.png  used on input line 227.
+Package pdftex.def Info: figures/ttestBayes.png  used on input line 281.
 (pdftex.def)             Requested size: 390.25021pt x 277.90071pt.
-[9 <./figures/ttestDescriptives.png>]
-Underfull \vbox (badness 3417) has occurred while \output is active []
-
-[10 <./figures/ttestBayes.png>]
-<figures/ttestRobust.png, id=190, 526.96875pt x 428.60126pt>
+[9 <./figures/ttestDescriptives.png>] [10 <./figures/ttestBayes.png>]
+<figures/ttestRobust.png, id=187, 526.96875pt x 428.60126pt>
 File: figures/ttestRobust.png Graphic file (type png)
 <use figures/ttestRobust.png>
-Package pdftex.def Info: figures/ttestRobust.png  used on input line 241.
+Package pdftex.def Info: figures/ttestRobust.png  used on input line 295.
 (pdftex.def)             Requested size: 260.18695pt x 211.61873pt.
-<figures/ttestBayes2.png, id=193, 1285.80376pt x 874.26625pt>
+[11 <./figures/ttestRobust.png>]
+<figures/ttestBayes2.png, id=197, 1285.80376pt x 874.26625pt>
 File: figures/ttestBayes2.png Graphic file (type png)
 <use figures/ttestBayes2.png>
-Package pdftex.def Info: figures/ttestBayes2.png  used on input line 249.
+Package pdftex.def Info: figures/ttestBayes2.png  used on input line 303.
 (pdftex.def)             Requested size: 390.25665pt x 265.35014pt.
-[11 <./figures/ttestRobust.png>]
-Underfull \vbox (badness 2653) has occurred while \output is active []
-
 [12 <./figures/ttestBayes2.png>]
-<figures/ttestSequential.png, id=208, 553.06625pt x 449.68pt>
+<figures/ttestSequential.png, id=205, 553.06625pt x 449.68pt>
 File: figures/ttestSequential.png Graphic file (type png)
 <use figures/ttestSequential.png>
-Package pdftex.def Info: figures/ttestSequential.png  used on input line 261.
+Package pdftex.def Info: figures/ttestSequential.png  used on input line 315.
 (pdftex.def)             Requested size: 260.16902pt x 211.53488pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [13 <./figures/ttestSequential.png>] [14]
 
-Package caption Warning: \label without proper reference on input line 300.
+Package caption Warning: \label without proper reference on input line 354.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tabLinreg' on page 15 undefined on input line 297.
-
-
-Underfull \vbox (badness 4353) has occurred while \output is active []
+LaTeX Warning: Reference `tabLinreg' on page 15 undefined on input line 351.
 
 [15]
 
-Package caption Warning: \label without proper reference on input line 300.
+Package caption Warning: \label without proper reference on input line 354.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tabLinreg' on page 16 undefined on input line 338.
+LaTeX Warning: Reference `tabLinreg' on page 16 undefined on input line 392.
 
-<figures/regression1.png, id=236, 1514.65875pt x 922.44624pt>
+[16]
+<figures/regression1.png, id=243, 1514.65875pt x 922.44624pt>
 File: figures/regression1.png Graphic file (type png)
 <use figures/regression1.png>
-Package pdftex.def Info: figures/regression1.png  used on input line 349.
+Package pdftex.def Info: figures/regression1.png  used on input line 403.
 (pdftex.def)             Requested size: 390.24277pt x 237.66275pt.
-[16] [17 <./figures/regression1.png>] [18]
-<figures/marginalPosterior.png, id=266, 1662.21pt x 1254.6875pt>
+[17 <./figures/regression1.png>] [18]
+<figures/marginalPosterior.png, id=263, 1662.21pt x 1254.6875pt>
 File: figures/marginalPosterior.png Graphic file (type png)
 <use figures/marginalPosterior.png>
-Package pdftex.def Info: figures/marginalPosterior.png  used on input line 374.
+Package pdftex.def Info: figures/marginalPosterior.png  used on input line 428.
 
 (pdftex.def)             Requested size: 260.17621pt x 196.38905pt.
 
-Package caption Warning: \label without proper reference on input line 300.
+Package caption Warning: \label without proper reference on input line 354.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tabLinreg' on page 19 undefined on input line 378.
+LaTeX Warning: Reference `tabLinreg' on page 19 undefined on input line 432.
 
 [19 <./figures/marginalPosterior.png>] [20]
-<figures/anovaBayes.png, id=285, 1385.175pt x 792.9625pt>
+<figures/anovaBayes.png, id=282, 1385.175pt x 792.9625pt>
 File: figures/anovaBayes.png Graphic file (type png)
 <use figures/anovaBayes.png>
-Package pdftex.def Info: figures/anovaBayes.png  used on input line 405.
+Package pdftex.def Info: figures/anovaBayes.png  used on input line 459.
 (pdftex.def)             Requested size: 390.25586pt x 223.40733pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [21 <./figures/anovaBayes.png>] [22]
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 441.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 495.
 
 (/usr/local/texlive/2019/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [23] [24]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 530.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 584.
 [25]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 530.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 584.
 (./manuscript.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 530.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 530.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 584.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 584.
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 7624265C31D67B1DAA1677329D290456;3784.
 
@@ -879,13 +971,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14995 strings out of 492616
- 222839 string characters out of 6129482
- 339442 words of memory out of 5000000
- 18368 multiletter control sequences out of 15000+600000
- 106251 words of font info for 186 fonts, out of 8000000 for 9000
+ 15966 strings out of 492616
+ 238059 string characters out of 6129482
+ 362558 words of memory out of 5000000
+ 19290 multiletter control sequences out of 15000+600000
+ 108598 words of font info for 195 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,11n,47p,2731b,443s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,11n,47p,3193b,420s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local
 /texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2019/
 texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2019/texmf-dist
@@ -906,10 +998,10 @@ ype1/public/lm/lmri10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/publi
 c/lm/lmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmsy8
 .pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/
 local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on manuscript.pdf (25 pages, 1266212 bytes).
+Output written on manuscript.pdf (25 pages, 1265682 bytes).
 PDF statistics:
- 449 PDF objects out of 1000 (max. 8388607)
- 383 compressed objects within 4 object streams
+ 446 PDF objects out of 1000 (max. 8388607)
+ 380 compressed objects within 4 object streams
  113 named destinations out of 1000 (max. 500000)
  14542 words of extra memory for PDF output out of 17280 (max. 10000000)
 

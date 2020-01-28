@@ -69,13 +69,13 @@ write.csv(dat, file="~/Desktop/MCLSworkshopData/regression.csv")
 # e.g., Campbell & Fugelsang (2001)
 
 # reported N from original paper
-N = 33
+N = 48
 
-# estimates from JASP ANOVA model fit on Frampton & Faulkenberry replication
-intercept = 1636.65-182.38-241.43; interceptSD = 83.03
-sizeBeta = 2*182.38; sizeSD = 16.24
-formatBeta = 2*241.43; formatSD = 16.23
-intBeta = 2*1.883; intSD = 14.5
+# estimates from Campbell & Fugelsang 
+intercept = 1069; interceptSD = 150
+sizeBeta = 262; sizeSD = 200
+formatBeta = 477; formatSD = 200
+intBeta = 212; intSD = 300
 
 # random effects
 intercepts = rnorm(n=N, mean=intercept, sd=interceptSD)
@@ -89,9 +89,10 @@ cond2 = intercepts + size                   # large, digit
 cond3 = intercepts + format                 # small, word
 cond4 = intercepts + size + format + int    # large, word
 
-subject = rep(seq(1,N), 4)
-size = rep(c(rep("small", N), rep("large",N)), 2)
-format = c(rep("digit", 2*N), rep("word", 2*N))
-rt = c(round(cond1), round(cond2), round(cond3), round(cond4))
-dat = data.frame(subject, size, format, rt)
+subject = seq(1,N)
+small.digit = round(cond1)
+large.digit = round(cond2)
+small.word = round(cond3)
+large.word = round(cond4)
+dat = data.frame(subject, small.digit, large.digit, small.word, large.word)
 write.csv(dat, "~/Desktop/anovaData.csv")

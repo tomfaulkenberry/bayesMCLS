@@ -396,61 +396,71 @@ After observing data, we can calculate the posterior inclusion probabilities \(P
 
 Using these posterior inclusion probabilities, we can calculate an \enquote{inclusion Bayes factor}, which is defined as the factor by which the prior odds for including a specific predictor are increased after observing data. For example, the prior odds for including symbolicDE is equal to 0.5/(1-0.5) = 1, and the posterior odds is equal to 0.993/(1-0.993) = 138.27. Thus, the odds have increased by a factor of 138.27/1 = 138.27. Similarly, the prior odds for including nonsymbolicDE as a predictor is equal to 1, whereas the posterior odds is equal to 0.290/(1-.290) = 0.409. We can interpret this Bayes factor less than one via the reciprocal by reporting that the odds of including have \emph{decreased} after observing data by a factor of 1/0.409 = 2.45.
 
-Finally, let us consider the marginal posterior distribution displayed in Figure @ref\{fig:marginalPosterior\}. For simplicity of discussion, we only display the marginal posterior for the nonsymbolicDE covariate, though JASP provides a plot for each covariate being considered. The figure shows exactly what is meant by model averaging; from the discussion above, we know there is uncertainty about whether to include nonsymbolicDE as a predictor in the overall model. This uncertainty can be quantified as the posterior inclusion probability, which from the posterior summary table we know to be \(P(\text{incl}\mid \text{data}) = 0.448\). Thus, it easily follows that the posterior probability of \emph{excluding} nonsymbolicDE as a predictor is \(1-0.448 = 0.552\); this probability is displayed in Figure \ref{fig:marginalPosterior} as a \enquote{spike} at 0. This spike together with with the posteriors of each model result in an unconditional 95\% credible interval, which states that the coefficient for nonsymbolicDE ranges from -6.28 to 35.28.
+Finally, let us consider the marginal posterior distribution displayed in Figure \ref{fig:marginalPosterior}. For simplicity of discussion, we only display the marginal posterior for the nonsymbolicDE covariate, though JASP provides a plot for each covariate being considered. The figure shows exactly what is meant by model averaging; from the discussion above, we know there is uncertainty about whether to include nonsymbolicDE as a predictor in the overall model. This uncertainty can be quantified as the posterior inclusion probability, which from the posterior summary table we know to be \(P(\text{incl}\mid \text{data}) = 0.448\). Thus, it easily follows that the posterior probability of \emph{excluding} nonsymbolicDE as a predictor is \(1-0.448 = 0.552\); this probability is displayed in Figure \ref{fig:marginalPosterior} as a \enquote{spike} at 0. This spike together with with the posteriors of each model result in an unconditional 95\% credible interval, which states that the coefficient for nonsymbolicDE ranges from -6.28 to 35.28.
 
 \hypertarget{example-3-a-factorial-analysis-of-variance}{%
 \section{Example 3: A factorial analysis of variance}\label{example-3-a-factorial-analysis-of-variance}}
 
-In our final example, we demonstrate a Bayesian factorial analysis of variance. To do this, we use a data set based on Campbell and Fugelsang (2001), who investigated the effects of problem size and numerical surface form on response times in an addition verification task. Not only did they find the usual effects of problem size (small problems are solved faster than large problems) and problem format (digit problems are solved faster than word problems), but they also observed an interaction between size and format; specifically, the problem size effect was larger for problems in word format than for problems in digit format. This interaction was interpreted as support for an \emph{interaction} model of mental arithmetic, where factors that influence encoding processes (e.g., surface format) also directly influence calculation processes.
+In our final example, we demonstrate a Bayesian factorial analysis of variance. To do this, we use a data set based on Campbell and Fugelsang (2001), who investigated the effects of problem size and numerical surface form on response times in an addition verification task. Not only did they find the usual effects of problem size (small problems are solved faster than large problems) and problem format (digit problems are solved faster than word problems), but they also observed an interaction between size and format. Specifically, the impact of problem format on RTs was greater for large problems than for small problems. This interaction was interpreted as evidence against the prevailing additive model of mental arithmetic, where the effects of problem format are localized to systems that encode numerical stimuli Dehaene and Cohen (1995). Instead, the interaction found by Campbell and Fugelsang (2001) demonstrated that surface format directly penetrates the downstream central calculation processes.
 
 \hypertarget{theory-of-bayesian-analysis-of-variance}{%
 \subsection{Theory of Bayesian analysis of variance}\label{theory-of-bayesian-analysis-of-variance}}
 
-The theory of Bayesian ANOVA is analogous to that of Bayesian linear regression elaborated on above, because an ANOVA model can be expressed as a linear regression with dummy variables ({\textbf{???}}, @field2012discovering). These dummy variables are covariates that can be either \enquote{0} or \enquote{1}. For instance, the factor \enquote{size} with levels \enquote{small} and \enquote{large} and the factor \enquote{format} with levels \enquote{digit} and \enquote{word} are expressed by the dummy codes such as \(x_{ik} = 0, 1, 0, 1\), which implies that \(y_{ik}\), the \(k\)th response of the \(i\)th participant, corresponds to stimula that were \enquote{small} in size and \enquote{word} of format.
+The theory of Bayesian ANOVA is analogous to that of Bayesian linear regression elaborated on above, because an ANOVA model can be expressed as a linear regression with dummy variables (Christensen, 2011, p. @field2012discovering). These dummy variables are covariates that can be either \enquote{0} or \enquote{1}. For instance, the factor \enquote{size} with levels \enquote{small} and \enquote{large} and the factor \enquote{format} with levels \enquote{digit} and \enquote{word} are expressed by the dummy codes such as \(x_{ik} = 0, 1, 0, 1\), which implies that \(y_{ik}\), the \(k\)th response of the \(i\)th participant, corresponds to the mean RT of stimuli that were \enquote{small} in size and \enquote{word} of format.
 
 Rouder et al. (2012) used the relationship between ANOVA and linear regression to develop the Bayesian ANOVA, which therefore also uses a multivariate Cauchy prior. Furthermore, this relationship allows us to express the problem at hand as a comparison between the models
 \begin{align*}
   \mathcal{M}_{0}: & \text{ rt} = \text{intercept} + \text{size}+\text{format} \text{ (null model)}\\
   \mathcal{M}_{1}: & \text{ rt} = \text{intercept} + \text{size}+\text{format}+\text{size*format} \text{ (interaction model)}. 
 \end{align*}
-This comparison fully focuses on the interaction term. Below we show how in JASP all parameters except the interaction term can be made part of the null model.
+Notice that in this case, the null model \(\mathcal{M}_0\) contains factors for size and format. This may seem odd at first, especially compared to the previous linear regression example that contained only the intercept in the null model. Here, we are setting size and format to be \emph{nuisance variables}. That is, our previous knowledge of mathematical cognition leads us to expect effects of size and format, so we are not interested in testing those effects. Rather, the problem at hand is to test whether there is an interaction between size and format. The model specifications above let us do this testing as a model comparison between \(\mathcal{M}_1\) (the interaction model) and \(\mathcal{M}_0\) (the null, or additive, model). Thus, with this comparison we can fully focus on the interaction term. Below we show how in JASP all parameters except the interaction term can be made part of the null model.
 
 \hypertarget{implementation-in-jasp-2}{%
 \subsection{Implementation in JASP}\label{implementation-in-jasp-2}}
 
-The simulated data based on this experiment can be found in the \texttt{anova.csv} file on Github. Loading this file into JASP, we can see four variables: \texttt{subject}, which encodes the subject number (1-48); \texttt{size}, which encodes problem size as either \enquote{small} or \enquote{large}; \texttt{format}, which encodes problem format as either \enquote{digit} or \enquote{word} , and \texttt{rt}, which represents the mean response time (in milliseconds) of correct trials for the given combination of subject, size, and format. Note that for the Bayesian analysis of variance we are about to perform, we will need to specify that \texttt{subject} is a nominal variable; to do this, simply click on the measurement level icon to the left of the variable name (the ruler) and select \enquote{Nominal} from the pop up menu.
+The simulated data is contained in the file \texttt{anova.csv}, which can be downloaded from (\url{https://git.io/JeXui}). Loading this file into JASP, we can see five variables: \texttt{subject}, which encodes the subject number (1-48); and four variables that each represent RTs in specific combinations of problem size and format: \texttt{small.digit}, representing small problems in digit format; \texttt{small.word}, representing small problems in word format; \texttt{large.digit}, representing large problems in digit format; and \texttt{large.word}, representing large problems in word format. Notice that these data are presented in \emph{wide} format, with each row representing a unique subject and each column giving the multiple measurements observed from each subject.
 
-To perform a Bayesian analysis of variance, we click the button for the \enquote{ANOVA} module and select \enquote{Bayesian ANOVA} from the menu. Then, we move the \texttt{rt} variable to the \enquote{Dependent variable} box, the \texttt{size} and \texttt{format} variables to the \enquote{Fixed Factors} box. Note that since these simulated data are from a repeated measures design, we will also need to tell JASP that \texttt{subject} is a random factor; thus we simply move this variable to the \enquote{Random Factors} box. There are many other options we could select, but for now, let us choose \enquote{Effects} and \enquote{Descriptives}. The result is shown in Figure \ref{fig:anovaBayes}.
+To perform a Bayesian analysis of variance, we click the button for the \enquote{ANOVA} module and select \enquote{Bayesian Repeated Measures ANOVA} from the menu. This procedure requires us to specify the names and levels of the repeated measures factors; clicking on the terms \enquote{RM Factor 1}, \enquote{Level 1}, etc. in the \enquote{Repeated Measures Factors} box makes these names editable. In Figure \ref{fig:repeatedMeasures1}, we have changed RM Factor 1 to \enquote{problems size}, Level 1 to \enquote{small}, and Level 2 to \enquote{large}. Additionally, we have changed RM Factor 2 to \enquote{format}, and its corresponding levels 1 and 2 were changed to \enquote{digit} and \enquote{word}, respectively. The names we give in the the \enquote{Repeated Measures Factors} box define repeated measures cells immediately reflecting the four unique combinations of problem size and format. We then drag our variables into these cells, in order of appearance in the \enquote{Repeated Measures Cells} box; that is, we first add \texttt{small.digit}, then \texttt{small.word}, followed by \texttt{large.digit} and \texttt{large.word}. Finally, as we did in the linear regression example, we select the checkbox for \enquote{Effects} under tables.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth,height=\textheight]{figures/anovaBayes.png}
-\caption{\label{fig:anovaBayes}JASP screenshot showing a Bayesian analysis of variance.}
+\includegraphics[width=0.5\textwidth,height=\textheight]{figures/repeatedMeasures1.png}
+\caption{\label{fig:repeatedMeasures1}JASP screenshot of the Bayesian Repeated Measures ANOVA menus.}
 \end{figure}
 
-The output shown in Figure \ref{fig:anovaBayes} will look similar to the linear regression example we did previously. Based on the fixed factors that are entered, JASP constructs a set of models to reflect the possible additive and interaction between these factors. Since we entered two fixed factors (size and format), JASP builds 5 competing models (all containing a random factor of \texttt{subject}:
+At this point, the output will look similar to the linear regression example we did previously. Based on the repeated measures factors that are entered, JASP constructs a set of models to reflect the possible additive combinations and interactions between these factors. Since we entered two factors (size and format), JASP builds 5 competing models:
 
 \begin{align*}
   \mathcal{M}_{0}: & \text{ rt} = \text{ (null model)}\\
-  \mathcal{M}_{1}: & \text{ rt} = \text{size} \text{ (main effect of problem size only)}\\
+  \mathcal{M}_{1}: & \text{ rt} = \text{problem size} \text{ (main effect of problem size only)}\\
   \mathcal{M}_{2}: & \text{ rt} = \text{format} \text{ (main effect of format only)}\\
-  \mathcal{M}_{3}: & \text{ rt} = \text{size}+\text{format} \text{ (additive model, no interaction)}\\
-  \mathcal{M}_{4}: & \text{ rt} = \text{size}+\text{format}+\text{size*format} \text{ (interaction model)}\\
+  \mathcal{M}_{3}: & \text{ rt} = \text{problem size}+\text{format} \text{ (additive model, no interaction)}\\
+  \mathcal{M}_{4}: & \text{ rt} = \text{problem size}+\text{format}+\text{problem size*format} \text{ (interaction model)}\\
 \end{align*}
 
-These models are each displayed in the rows of the output in Figure \ref{fig:anovaBayes} in decreasing order of model fit (i.e., the best fitting model is listed at the top). We can see immediately that the best fitting model is \(\mathcal{M}_{3}\), the additive model without the interaction term. But, to understand why it is the best model and how it compares to the other 4 models, we need to discuss what each of the columns in the output table represent.
+However, our goal is to directly compare the predictive adequacy of the additive model \(\mathcal{M}_3\) against the interaction model \(\mathcal{M}_4\). To make this easier, we can make the additive model into a \enquote{null} model of sorts, so that now there is only one comparison: the interaction model against the additive model. We do this in JASP by clicking on \enquote{Model} and selecting the \enquote{Add to null model} checkboxes for both problem size and format; see Figure \ref{fig:repeatedMeasures2}.
 
-The first column, \(P(M)\), lists the prior probabilities of the 5 models. By default, JASP assigns these models to have equal probability, \emph{a priori}. Since there are 5 models, the prior probability of each model is \(1/5 = 0.2\). The second column, \(P(M\mid \text{data})\), gives the posterior model probabilities. Like the prior model probabilities, these must add to 1, but now there has been some shift from prior model probability to posterior model probability. Here, after observing data, we can see that the additive model \(\mathcal{M}_{3}\) and the interaction model \(\mathcal{M}_{4}\) account for most of our posterior belief (with posterior probabilities 0.821 and 0.179, respectively). The remaining three models essentially have posterior probability 0.
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight]{figures/repeatedMeasures2.png}
+\caption{\label{fig:repeatedMeasures2}Adding the factors of problem size and format to the null model in a Bayesian Repeated Measures ANOVA.}
+\end{figure}
 
-As in the regression example, the third column, \(\textnormal{BF}_{M}\), gives the factor by which the prior odds for a given model have been updated to produce the posterior odds for that model. For example, consider the additive model \(\mathcal{M}_{3}\). The prior odds for \(\mathcal{M}_{3}\), which is defined as the probability that \(\mathcal{M}_{3}\) is the true model divided by the probability that \(\mathcal{M}_{3}\) is \emph{not} the true model, can be computed as \(0.2/(1-0.2) = 0.2/0.8 = 0.25\). By similar calculation, the posterior odds are equal to \(0.821/(1-0.821) = 0.821/0.179 = 4.587\). Thus, the updating factor from prior odds to posterior odds is calculated as \(4.587/0.25 = 18.393\). One of the useful properties of this column is that it tells the user quickly whether the odds for a particular model has \emph{increased} or \emph{decreased}. As we can see in Figure \ref{fig:anovaBayes}, the only model for which model odds have increased is the additive model \(\mathcal{M}_{3}\).
+At this point, the output will change considerably. Figure \ref{fig:repeatedMeasures3} shows that the Model Comparison table now only contains two rows; one for each of our models under consideration (additive model versus interaction model). Again, by default, JASP sorts these models in decreasing order of model fit. The interpretation of each column in the Model Comparison table is exactly the same as in the linear regression example, but for completeness, we will provide a brief explanation of each column.
 
-Finally, the fourth column, \(\textnormal{BF}_{10}\), lists the Bayes factor for a given model compared to the best fitting model (note that this is the default setting in JASP, but if desired, it can be changed by the user to instead display the Bayes factor compared to the null model). This is a very useful column for the specific model comparison that is motivated by this example, namely the comparison of the additive model \(\mathcal{M}_{3}\) to the interaction model \(\mathcal{M}_{4}\). In the results table, we see that the Bayes factor for the interaction model \(\mathcal{M}_{4}\) compared to the additive model \(\mathcal{M}_{3}\) is 0.217. Taking reciprocals, this tells us that the Bayes factor for the additive model over the interaction model is \(1/0.217 = 4.61\). In other words, the observed data are approximately 5 times more likely under the additive model than under the interaction model, giving moderate support for an additive-only model of mental arithmetic.
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth,height=\textheight]{figures/repeatedMeasures3.png}
+\caption{\label{fig:repeatedMeasures3}Output tables for the Bayesian Repeated Measures ANOVA.}
+\end{figure}
 
-The second table in the JASP results output simply recasts the results of the top table into a form that may translate better to researchers who are trained to think about ANOVA models as testing \enquote{effects}. If we think about the terms of the model as potential effects to test, we have three questions: do we include (1) a main effect of problem size; (2) a main effect of format; and (3) an interaction effect? This problem is cast in terms of \emph{inclusion probabilities}; i.e., what is the probability of including this term, or effect, in the best fitting model? Of course, the problem is Bayesian, so we have to think about how prior model probabilities are updated to posterior model probabilities after observing data. This information is summarized in three columns, described next.
+The first column, \(P(M)\), lists the prior probabilities of the 2 models under consideration. By default, JASP assigns these models to have equal probability, \emph{a priori}. Since there are 2 models, the prior probability of each model is \(1/2 = 0.5\). The second column, \(P(M\mid \text{data})\), gives the posterior model probabilities. After observing data, we can see that the interaction model has the largest posterior probability, 0.999. The additive model has probability 0.0006799 (expressed in scientific notation in Figure \ref{fig:repeatedMeasures3}).
 
-The first column, \(P(\text{incl})\), lists the prior probability of including a particular term in the model. We can see that the prior probability of including \enquote{size} as a term in the model is 0.6, but let's see why this is the case. Recall above that we listed 5 possible models; note also that 3 of the 5 models contained the variable \enquote{size}. Thus, the prior probability of including size in our model is 3/5 = 0.6. The other prior inclusion probabilities can be computed similarly.
+As in the regression example, the third column, \(\textnormal{BF}_{M}\), gives the factor by which the prior odds for a given model have been updated to produce the posterior odds for that model. After observing data, the prior odds (1:1) in favor of the interaction model have been multiplied by a factor of 1469.749. For the two-model comparison in this example, this Bayes factor is identical to the Bayes factor \(\textnormal{BF}_{10}\) produced in the fourth column. Recall that this column lists the Bayes factor for a given model compared to the best fitting model, which in this case is the interaction model. Since we want to know the Bayes factor for the interaction model \emph{over} the additive model, we can divide the two Bayes factors to get \(1/0.0006804 = 1469.72\). Note that this Bayes factor is very close to the value we saw for \(\textnormal{BF}_{M}\); in situations where there are only \emph{two} models under consideration, this will always be the case.
 
-The second column, \(P(\text{incl}\mid\text{data})\), gives the posterior probabilities of including a particular term in the model, after observing data. As we can see, the posterior inclusion probabilities for the effects of both problem size and format are very large (JASP reports them as 1.000). On the other hand, the posterior probability of including the interaction term actually decreases to 0.179 after observing data. The third column, \(\textnormal{BF}_{\text{incl}}\), quantifies this change as the factor by which the prior odds of including the term (i.e., \(P(\text{incl})/P(\text{not incl}))\)) have changed to posterior inclusion odds after observing data. For both effects of problem size and format, this Bayes factor is extremely large, giving us overwhelming evidence for the \enquote{effects} of problem size and format. However, the prior odds for including an interaction term have decreased from \(0.2/(1-0.2) = 0.2/0.8 = 0.25\) to posterior odds of \(0.179/(1-0.179) = 0.179/0.821 = 0.218\), a factor of \(0.218/0.25 = 0.870\).
+The second table in the JASP output (\enquote{Analysis of Effects} in Figure \ref{fig:repeatedMeasures3}) provides the prior and posterior inclusion probabilites and the inclusion Bayes factor for the interaction \enquote{effect}; see our discussion of how this table is computed in the linear regression example above. In our analysis, the prior probabability of including the interaction is 0.5, because we are only comparing two models -- one with the interaction and one without. The posterior probability of including the interaction is 0.999 (note that this posterior probability is actually larger than 0.999, but with default preferences JASP only presents 3 decimal places for this probability). Thus, the inclusion Bayes factor \(\textnormal{BF}_{\text{incl}}\), which quantifies the factor by which the prior odds of including the interaction (i.e., \(P(\text{incl})/P(\text{not incl}))\)) have changed to posterior inclusion odds after observing data. For our data, we have substantial evidence for the interaction, with \(\textnormal{BF}_{\text{incl}} = 1469.749\).
+
+We note that there are many other options that a user might want to explore when computing a Bayesian analysis of variance in JASP. The interested reader should consult van den Bergh et al. (2019) for another tutorial on conducting Bayesian ANOVA in JASP, as well as van Doorn et al. (2019) for guidelines on how to report the results of this analysis.
 
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
@@ -481,10 +491,19 @@ Bahadur, R. R., \& Bickel, P. J. (2009). An optimality property of Bayes' test s
 Bayarri, M. J., Berger, J. O., Forte, A., \& Garcia-Donato, G. (2012). Criteria for Bayesian model choice with application to variable selection. \emph{The Annals of Statistics}, \emph{40}(3), 1550--1577.
 
 \leavevmode\hypertarget{ref-campbellFugelsang2001}{}%
-Campbell, J. I. D., \& Fugelsang, J. (2001). Strategy choice for arithmetic verification: Effects of numerical surface form. \emph{Cognition}, \emph{80}(3), B21--B30. doi:\href{https://doi.org/10.1016/s0010-0277(01)00115-9}{10.1016/s0010-0277(01)00115-9}
+Campbell, J. I. D., \& Fugelsang, J. (2001). Strategy choice for arithmetic verification: Effects of numerical surface form. \emph{Cognition}, \emph{80}(3), B21--B30. \url{https://doi.org/10.1016/s0010-0277(01)00115-9}
+
+\leavevmode\hypertarget{ref-christensen2011plane}{}%
+Christensen, R. (2011). \emph{Plane answers to complex questions: The theory of linear models}. Springer Science \& Business Media.
+
+\leavevmode\hypertarget{ref-dehaeneCohen1995}{}%
+Dehaene, S., \& Cohen, L. (1995). Towards an anatomical and functional model of number processing. \emph{Mathematical Cognition}, \emph{1}(1), 83--120.
 
 \leavevmode\hypertarget{ref-faulkenberry2019estimating}{}%
 Faulkenberry, T. J. (2019). Estimating evidential value from analysis of variance summaries: A comment on ly et al.(2018). \emph{Advances in Methods and Practices in Psychological Science}, 2515245919872960.
+
+\leavevmode\hypertarget{ref-field2012discovering}{}%
+Field, A., Miles, J., \& Field, Z. (2012). \emph{Discovering statistics using R}. Sage publications.
 
 \leavevmode\hypertarget{ref-gronauInpressinformed}{}%
 Gronau, Q. F., Ly, A., \& Wagenmakers, E.-J. (n.d.). Informed Bayesian \(t\)-tests. \emph{The American Statistician}.
@@ -496,7 +515,7 @@ Grünwald, P., Heide, R. de, \& Koolen, W. (2019). Safe testing. \emph{arXiv Pre
 Hendriksen, A., Heide, R. de, \& Grünwald, P. (2018). Optional stopping with Bayes factors: A categorization and extension of folklore results, with an application to invariant situations. \emph{arXiv Preprint arXiv:1807.09077}.
 
 \leavevmode\hypertarget{ref-hollowayAnsari2009}{}%
-Holloway, I. D., \& Ansari, D. (2009). Mapping numerical magnitudes onto symbols: The numerical distance effect and individual differences in children's mathematics achievement. \emph{Journal of Experimental Child Psychology}, \emph{103}(1), 17--29. doi:\href{https://doi.org/10.1016/j.jecp.2008.04.001}{10.1016/j.jecp.2008.04.001}
+Holloway, I. D., \& Ansari, D. (2009). Mapping numerical magnitudes onto symbols: The numerical distance effect and individual differences in children's mathematics achievement. \emph{Journal of Experimental Child Psychology}, \emph{103}(1), 17--29. \url{https://doi.org/10.1016/j.jecp.2008.04.001}
 
 \leavevmode\hypertarget{ref-jaspSoftware}{}%
 JASP Team. (2019). JASP (Version 0.11.1.0){[}Computer software{]}. Retrieved from \url{https://jasp-stats.org/}
@@ -517,19 +536,19 @@ Li, Y., \& Clyde, M. A. (2018). Mixtures of g-priors in generalized linear model
 Liang, F., Paulo, R., Molina, G., Clyde, M. A., \& Berger, J. O. (2008). Mixtures of g priors for Bayesian variable selection. \emph{Journal of the American Statistical Association}, \emph{103}(481).
 
 \leavevmode\hypertarget{ref-lorch1990}{}%
-Lorch, R. F., \& Myers, J. L. (1990). Regression analyses of repeated measures data in cognitive research., \emph{16}(1), 149--157. doi:\href{https://doi.org/10.1037/0278-7393.16.1.149}{10.1037/0278-7393.16.1.149}
+Lorch, R. F., \& Myers, J. L. (1990). Regression analyses of repeated measures data in cognitive research., \emph{16}(1), 149--157. \url{https://doi.org/10.1037/0278-7393.16.1.149}
 
 \leavevmode\hypertarget{ref-ly2017replication}{}%
-Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (2019). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}, \emph{51}(6), 2498--2508. doi:\href{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}{https://doi.org/10.3758/s13428-018-1092-x}
+Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (2019). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}, \emph{51}(6), 2498--2508. \url{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}
 
 \leavevmode\hypertarget{ref-ly2017tutorial}{}%
-Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. doi:\href{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}{https://doi.org/10.1016/j.jmp.2017.05.006}
+Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. \url{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}
 
 \leavevmode\hypertarget{ref-ly2016harold}{}%
-Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. doi:\href{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}{http://dx.doi.org/10.1016/j.jmp.2015.06.004}
+Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. \url{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}
 
 \leavevmode\hypertarget{ref-moyer1967}{}%
-Moyer, R. S., \& Landauer, T. K. (1967). Time required for judgements of numerical inequality. \emph{Nature}, \emph{215}(5109), 1519--1520. doi:\href{https://doi.org/10.1038/2151519a0}{10.1038/2151519a0}
+Moyer, R. S., \& Landauer, T. K. (1967). Time required for judgements of numerical inequality. \emph{Nature}, \emph{215}(5109), 1519--1520. \url{https://doi.org/10.1038/2151519a0}
 
 \leavevmode\hypertarget{ref-rouder2012defaultRegression}{}%
 Rouder, J. N., \& Morey, R. D. (2012). Default Bayes factors for model selection in regression. \emph{Multivariate Behavioral Research}, \emph{47}(6), 877--903.
@@ -540,17 +559,23 @@ Rouder, J. N., Morey, R. D., Speckman, P. L., \& Province, J. M. (2012). Default
 \leavevmode\hypertarget{ref-rouder2009bayesian}{}%
 Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., \& Iverson, G. (2009). Bayesian t tests for accepting and rejecting the null hypothesis. \emph{Psychonomic Bulletin \& Review}, \emph{16}(2), 225--237.
 
+\leavevmode\hypertarget{ref-vandenbergh2019how}{}%
+van den Bergh, D., van Doorn, J., Marsman, M., Draws, T., van Kesteren, E. J., Derks, K., \ldots{} Wagenmakers, E. (2019). How to interpret the output of a Bayesian ANOVA in JASP. \emph{PsyArXiV}. \url{https://doi.org/10.31234/osf.io/spreb}
+
 \leavevmode\hypertarget{ref-vandeschoot2017systematic}{}%
 van de Schoot, R., Winter, S. D., Ryan, O., Zondervan-Zwijnenburg, M., \& Depaoli, S. (2017). A systematic review of Bayesian articles in psychology: The last 25 years. \emph{Psychological Methods}, \emph{22}(2), 217--239.
 
+\leavevmode\hypertarget{ref-doorn2019jaspguidelines}{}%
+van Doorn, J., van den Bergh, D., Bohm, U., Dablander, F., Derks, K., Draws, T., \ldots{} Wagenmakers, E.-J. (2019). The JASP guidelines for conducting and reporting a bayesian analysis. \emph{PsyArXiv}. \url{https://doi.org/10.31234/osf.io/yqxfr}
+
 \leavevmode\hypertarget{ref-vergutsDeMoor2005}{}%
-Verguts, T., \& De Moor, W. (2005). Two-digit comparison: Decomposed, holistic, or hybrid? \emph{Experimental Psychology}, \emph{52}(3), 195--200. doi:\href{https://doi.org/10.1027/1618-3169.52.3.195}{10.1027/1618-3169.52.3.195}
+Verguts, T., \& De Moor, W. (2005). Two-digit comparison: Decomposed, holistic, or hybrid? \emph{Experimental Psychology}, \emph{52}(3), 195--200. \url{https://doi.org/10.1027/1618-3169.52.3.195}
 
 \leavevmode\hypertarget{ref-wagenmakers2010}{}%
-Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., \& Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage--Dickey method. \emph{Cognitive Psychology}, \emph{60}(3), 158--189. doi:\href{https://doi.org/10.1016/j.cogpsych.2009.12.001}{10.1016/j.cogpsych.2009.12.001}
+Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., \& Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage--Dickey method. \emph{Cognitive Psychology}, \emph{60}(3), 158--189. \url{https://doi.org/10.1016/j.cogpsych.2009.12.001}
 
 \leavevmode\hypertarget{ref-zellner1980posterior}{}%
-Zellner, A., \& Siow, A. (1980). Posterior odds ratios for selected regression hypotheses. In J. M. Bernardo, M. H. DeGroot, D. V. Lindley, \& A. F. Smith (Eds.), \emph{Bayesian statistics: Proceedings of the first international meeting held in Valencia} (Vol. 1, pp. 585--603). Springer.
+Zellner, A., \& Siow, A. (1980). Posterior odds ratios for selected regression hypotheses. In J. M. Bernardo, M. H. DeGroot, D. V. Lindley, \& A. F. M. Smith (Eds.), \emph{Bayesian statistics: Proceedings of the first international meeting held in Valencia} (Vol. 1, pp. 585--603). Springer.
 
 
 \end{document}

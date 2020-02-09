@@ -95,7 +95,7 @@
 \setlength{\longtablewidth}{1in}
 \newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
 
-\authornote{The examples presented in this tutorial were originally constructed for a Bayesian statistics workshop conducted by the first author in June 2019 at the Mathematical Cognition and Learning Society conference in Ottawa, Ontario. All materials (including a reproducible version of this manuscript) can be downloaded from \url{https://github.com/tomfaulkenberry/bayesMCLS}.
+\authornote{The examples presented in this tutorial were originally constructed for a Bayesian statistics workshop conducted by the first author in June 2019 at the Mathematical Cognition and Learning Society conference in Ottawa, Ontario. All materials (including a reproducible version of this manuscript) can be downloaded from \url{https://git.io/JeXui}.
 
 Correspondence concerning this article should be addressed to Thomas J. Faulkenberry, Department of Psychological Sciences, Box T-0820, Tarleton State University, Stephenville, TX 76401. E-mail: \href{mailto:faulkenberry@tarleton.edu}{\nolinkurl{faulkenberry@tarleton.edu}}}
 
@@ -462,18 +462,10 @@ The second table in the JASP output (\enquote{Analysis of Effects} in Figure \re
 
 We note that there are many other options that a user might want to explore when computing a Bayesian analysis of variance in JASP. The interested reader should consult van den Bergh et al. (2019) for another tutorial on conducting Bayesian ANOVA in JASP, as well as van Doorn et al. (2019) for guidelines on how to report the results of this analysis.
 
-\hypertarget{conclusions}{%
-\section{Conclusions}\label{conclusions}}
+\hypertarget{concluding-comments}{%
+\section{Concluding comments}\label{concluding-comments}}
 
-The examples provided in this tutorial represent a broad class of techniques that are common to many studies in numerical cognition and should be familiar to most researchers.
-
-\begin{itemize}
-\tightlist
-\item
-  reiterate benefits of Bayesian testing
-\item
-  give reference to other JASP and Bayes tutorials
-\end{itemize}
+In this tutorial, we have presented the basics of Bayesian inference in the context of three well-cited studies from the numerical cognition literature. The examples provided in this tutorial represent a broad class of techniques (e.g., \(t\)-tests, linear regression, and analysis of variance) that are common to many studies in numerical cognition and should be familiar to most researchers. We have focused our tutorial on describing the use of Bayes factors as a tool for evaluating the predictive adequacy of competing hypotheses. Using the free software package JASP, we have demonstrated how to compute Bayes factors for each example and explained some of the most basic options that are provided to the user. While the examples we have provided are far from exhaustive with respect to depth of analysis, we feel that they provide the reader with a good foundation and provide an encouraging start to the use of Bayes factors. We hope the reader will take this tutorial as a starting place to applying Bayesian inference in the analysis of their own datasets.
 
 \newpage
 

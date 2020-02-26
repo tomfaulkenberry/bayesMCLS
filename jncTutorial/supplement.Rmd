@@ -1,0 +1,149 @@
+---
+title             : "Supplement to Bayesian Inference in Numerical Cognition: A Tutorial Using JASP"
+shorttitle        : "Bayesian inference in numerical cognition"
+
+author:
+  - name          : "Thomas J. Faulkenberry"
+    corresponding : yes    
+    affiliation   : "1"
+    address       : "Department of Psychological Sciences, Box T-0820, Tarleton State University, Stephenville, TX 76401"
+    email         : "faulkenberry@tarleton.edu"
+  - name          : "Alexander Ly"
+    affiliation   : "2,3"
+    corresponding : no
+  - name          : "Eric-Jan Wagenmakers"
+    affiliation   : "2"
+    corresponding : no
+
+affiliation:
+  - id            : "1"
+    institution   : "Tarleton State University"
+  - id            : "2"
+    institution   : "University of Amsterdam"
+  - id            : "3"
+    institution   : "Centrum Wiskunde & Informatica"
+
+
+author_note: >
+
+abstract: >
+
+
+bibliography      : ["references.bib"]
+
+figsintext        : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+lineno            : no
+
+lang              : "english"
+class             : "doc" # can change this to "man" or "jou" or "doc"
+output            : papaja::apa6_pdf
+---
+
+```{r start, include = FALSE}
+library(papaja)
+```
+
+
+## Theory of the Bayesian $t$-test
+
+Recall that a Bayes factor compares two models, say, $\mathcal{M}_{1}$ and $\mathcal{M}_{0}$, and suppose that the vector of free parameters of these models are denoted by $\theta_{1}$ and $\theta_{0}$ respectively. For instance, we write $\theta_{1} = ( \mu, \sigma)$ and $\theta_{0} = \sigma$ for the one-sample $t$-test.
+
+To construct a Bayes factor, the statistician needs to select two priors --one for each model, which are denoted by $\pi_{1} (\theta_{1})$ and $\pi_{0}(\theta_{0})$ respectively [e.g., @bayarri2012criteria], and provide its users with a computational method. We only introduced the notation $\pi_{1} (\theta_{1})$ and $\pi_{0} (\theta_{0})$, chosen by the statistician, to highlight their difference from prior model probabilities, which are denoted with a capital $P$, chosen by the field experts.
+
+The Bayesian $t$-test is based on the priors $\pi_{1}$, which puts an "uninformative" prior on the nuisance parameter $\sigma$ [e.g., @ly2017tutorial] in conjunction with a Cauchy prior on the test-relevant parameter represented as a population effect size $\delta = \mu / \sigma$, and the prior $\pi_{0}$ with the same "uninformative" prior on the nuisance parameter $\sigma$. With these priors, the resulting Bayes factor has a number of desirable properties: 
+
+1. \textbf{Measurement invariant.} The Bayes factor as a measure of evidence does not change if the units of measurements are changed [e.g., @rouder2009bayesian]. For instance, if the data were to consist of temperature measurements, the Bayes factor would be the same regardless of the data being entered as Celsius or Fahrenheit. 
+
+2. \textbf{Predictively matched.} The Bayes factor reflects perfectly indifference, i.e., $\textnormal{BF}_{10}=1$ when the data are completely uninformative. A Bayes factor of one implies that the posterior model probabilities equal the prior model probabilities, and nothing has been learned; see @jeffreys1961, for further details. 
+
+3. \textbf{Information consistent.} For a sufficiently large enough fixed sample size $n$, the Bayes factor overwhelmingly provides support for the alternative, whenever the observed $t$-value goes to infinity; see @gronau2017informed, @ly2016harold for further details. 
+
+4. \textbf{(Asymptotically) consistent.} As the Bayes factor takes in an increasing number of samples of data points generated under the null model, then as $n$ grows, the Bayes factor $\textnormal{BF}_{10}$ tends to zero to convey support for the data generating model $\mathcal{M}_{0}$. On the other hand, if $n$ grows with data generated under the alternative, the Bayes factor $\textnormal{BF}_{10}$ grows unbounded; see for instance @liang2008mixtures. 
+
+5. \textbf{Robust to changes in the sample size.} With the uninformative prior on $\sigma$, this Bayes factor allows for optional stopping, that is, early stopping when there is enough evidence for the alternative [e.g., @hendriksen2018optional] without inflating the type I error. On top of this, the Bayesian $t$-test also allows for optional continuation, which implies that one can build on top of previous results; see for instance @faulkenberry2019estimating, @grunwald2019safe, @ly2019replication. Note that properties (4), (5), and (6) imply that the Bayesian $t$-test, first derived by @jeffreys1948theory2, also has good frequentist properties.
+
+With these priors at hand, the Bayes factor is defined as a ratio of marginal likelihoods, that is,
+
+\begin{align}
+\textnormal{BF}_{10} = \frac{ \int_{\Theta_{1}} f(d \, | \, \theta_{1}) \pi_{1}(\theta_{1}) \textnormal{d} \theta_{1}}{\int_{\Theta_{0}} f(d \, | \, \theta_{0}) \pi_{0}(\theta_{0}) \textnormal{d} \theta_{0}},
+\end{align}
+
+which practitioners do not need to compute themselves, as JASP does the computations for them in the background.
+
+## Theory of Bayesian linear regression
+### Linear regression models
+We first elaborate on linear regression models, before we discuss the Bayesian implementation.
+
+We write \( Y_{i} \) for the continous outcome variable of the \( i \)th participant, and \( x_{i1}, x_{i2}, \ldots, x_{ip} \) for the \( i \)th participant's covariates. For the example at hand, \( Y_{i} \) represents a participant's mathematical fluency score, and we have \( p=2 \) covariates consisting of the \( i \)th participant's measurements \( x_{i1}=\text{ symbolicDE}_{i} \), and \( x_{i2}=\text{ nonsymbolicDE}_{i} \).
+
+The difficulty here is that with \( p \) covariates there are \( 2^{p} \) models. For instance with \( p=2 \), we have \( 2^{p} = 4 \) models, which are given by<!--
+-->
+\begin{align*}
+\mathcal{M}_{0} & : Y_{i} =\beta_{0} + \varepsilon_{i}, \\
+\mathcal{M}_{1} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \varepsilon_{i}, \\
+\mathcal{M}_{2} & : Y_{i} =\beta_{0} + \beta_{2} x_{i2} + \varepsilon_{i}, \\
+\mathcal{M}_{3} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} + \varepsilon_{i},
+\end{align*}<!--
+-->
+where \( \beta_{0} \) represents the intercept, \( \beta_{1} \) the effect of symbolicDE on \( Y_{i} \), \( \beta_{2} \) the effect of nonsymbolicDE on \( Y_{i} \), and \( \varepsilon_{i} \sim \mathcal{N}(0, \sigma^{2}) \) is a normally distributed error. Each model can be thought of as an operationalisation of a hypothesis. Note that all models include the intercept and error variance \( \sigma^{2} \) parameters, which are related to the outcome variable \( Y_{i} \). The models \( \mathcal{M}_{0},\mathcal{M}_{1},\mathcal{M}_{2}, \mathcal{M}_{3} \) have 2, 3, 3 and 4 parameters, respectively. In general, the largest model will have \( p + 2 \) parameters.
+
+All models decompose \( Y_{i} \) into two parts: a part that is structural, and a part that is simply noise. For the null model, all the structure is given by the intercept \( \beta_{0} \), whereas in \( \mathcal{M}_{1}, \mathcal{M}_{2} \) and \( \mathcal{M}_{3} \) the intercept \( \beta_{0} \) competes with the covariates to predict \( Y_{i} \). Hence, despite terms being denoted with the same symbol, such as the intercepts \( \beta_{0} \), they have a different impact on \( Y_{i} \) depending on the context given by the model. As such, the question whether symbolicDE has an effect on fluency depends on the particular model that is being compared.
+
+### Bayesian linear regression
+To avoid the dependence on which model is being compared, we exploit the flexibility of Bayesian methods, and address questions such as whether symbolicDE has an effect on fluency by *averaging* across all models considered. To model average we require weights, and for simplicity we assume that all models are equally probable a priori. In other words, we put a uniform prior on the models, and because we have four models each model gets a prior model probability of \( 1/4=0.25 \). Table \@ref(tabLinreg) provides a summary of this information.<!--
+-->
+\begin{table}
+\label{tabLinreg}
+\caption{List of all models with the two potential predictors and the prior model probability of each model. A "1" indicates that the predictor is active in model, whereas a "0" implies that the predictor is inactive.}
+\begin{center}
+\begin{tabular}{rllll}
+\hline
+Model & symbolicDE & nonsymbolicDE & \( P(\mathcal{M}) \) \\
+\hline
+\( \mathcal{M}_{0} \) & 0 & 0 & 0.25 \\
+\( \mathcal{M}_{1} \) & 1 & 0 & 0.25 \\
+\( \mathcal{M}_{2} \) & 0 & 1 & 0.25 \\
+\( \mathcal{M}_{3} \) & 1 & 1 & 0.25 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}<!--
+-->
+The a priori probability of the relevance of the covariate symbolicDE on \( Y_{i} \) is given by aggregating the probabilities of the models \( \mathcal{M}_{1} \) and \( \mathcal{M}_{3} \), thus, 50%. Similarly, the a priori relevance of the covariate nonsymbolicDE is also 50%, whereas the a priori probability of both symbolicDE and nonsymbolicDE having an impact on \( Y_{i} \) is only given by \( P(\mathcal{M}_{3}) = 0.25 \).
+
+To compute the relevance of each covariate **after** data observation, we simply replace the prior model probabilities in the table by the posterior model probabilities. These are calculated using a generalisation of Equation 1 which specifies that the posterior model probability for model \( k=0, 1, \ldots p-1 = 3 \) is given by<!--
+-->
+\begin{equation}
+\label{eqPriorToPosteriorGeneral}
+P(\mathcal{M}_{k} \mid d) = \frac{ \text{BF}_{k0}(d) P(\mathcal{M}_{k})}{ \sum_{k=0}^{p-1} \text{BF}_{k0}(d) P(\mathcal{M}_{k})},
+\end{equation}<!--
+-->
+where the comparison between the null model and itself is defined as \( \text{BF}_{00}(d) = 1 \) regardless of the data. Now, suppose that the model \( \mathcal{M}_{k} \) has \( l \leq p \) active covariates. Then for the Bayes factor \( \text{BF}_{k0} \), we need to choose a prior on \( l + 2 \) parameters for \( \mathcal{M}_{k} \) and a prior on \( 2 \) parameters for \( \mathcal{M}_{0} \). @zellner1980posterior proposed to use essentially the same priors Jeffreys used for his Bayesian \( t \)-test. This connection is made explicit by exploiting the assumption of normally distributed errors to rewrite the linear regression models as the following normal means models:<!--
+-->
+\begin{align}
+\label{eqLinRegAsNormal0}
+\mathcal{M}_{0} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0}, \sigma^{2}), \\
+\mathcal{M}_{1} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{1} x_{i1}, \sigma^{2}), \\
+\mathcal{M}_{2} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{2} x_{i2}, \sigma^{2}), \\
+\label{eqLinRegAsNormal3}
+\mathcal{M}_{3} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} , \sigma^{2}),
+\end{align}<!--
+-->
+where \( Y_{i} \, | \, x_{i} \) refers to the outcome variable given the covariates \( x_{i} \).
+
+More explicitly, the Bayes factor \( \text{BF}_{k0} \), where \( \mathcal{M}_{k} \) has \( l \) active covariates, uses an "uninformative" prior on the nuisance parameter \( \beta_{0} \) and \( \sigma \) in both models, and for the \( \mathcal{M}_{k} \) an additional \( l \)-dimensional multivariate Cauchy prior on the vector of population effect sizes \( \delta \). The vector of effect sizes is defined by rescaling the vector of active \( \beta \) coefficients with respect to \( \sigma \), but also with respect to the covariates. More explicitly, when \( l=1 \), say, only \( \beta_{2} \) is active then the effect size parameter is given by \( \delta = \beta_{2} s_{x_{2}}/\sigma \), where \( s_{x_{2}} \) is observed standard error of the second covariate. If the second covariate is standardised, then \( s_{x_{2}} = 1 \), and we get the same definition of effect size as in the \( t \)-test, but with \( \mu \) replaced by \( \beta_{2} \). Furthermore, with \( l = 1 \), the prior on \( \delta \) is than a \( 1 \)-dimensional Cauchy distribution, indeed, the same one we would use in the \( t \)-test.
+
+
+With both the prior model probabilities and the Bayes factor at hand \eqref{eqPriorToPosteriorGeneral} now provides the posterior model probabilities. Once the latter are computed, the posterior relevance of each covariate can be assessed as we have done in Table \@ref(tabLinreg). We elaborate on this procedure with the example.
+
+\newpage
+
+# References
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+

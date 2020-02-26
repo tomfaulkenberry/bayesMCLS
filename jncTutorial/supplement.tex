@@ -1,0 +1,305 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[english,,doc,floatsintext]{apa6}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Supplement to Bayesian Inference in Numerical Cognition: A Tutorial Using JASP},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\begin{center}\begin{threeparttable}}
+%   {\end{threeparttable}\end{center}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\makeatother
+\shorttitle{Bayesian inference in numerical cognition}
+\author{Thomas J. Faulkenberry\textsuperscript{1}, Alexander Ly\textsuperscript{2,3}, \& Eric-Jan Wagenmakers\textsuperscript{2}}
+\affiliation{
+\vspace{0.5cm}
+\textsuperscript{1} Tarleton State University\\\textsuperscript{2} University of Amsterdam\\\textsuperscript{3} Centrum Wiskunde \& Informatica}
+\authornote{
+
+Correspondence concerning this article should be addressed to Thomas J. Faulkenberry, Department of Psychological Sciences, Box T-0820, Tarleton State University, Stephenville, TX 76401. E-mail: faulkenberry@tarleton.edu}
+\usepackage{csquotes}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=english]{babel}
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+
+\title{Supplement to Bayesian Inference in Numerical Cognition: A Tutorial Using JASP}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{theory-of-the-bayesian-t-test}{%
+\subsection{\texorpdfstring{Theory of the Bayesian \(t\)-test}{Theory of the Bayesian t-test}}\label{theory-of-the-bayesian-t-test}}
+
+Recall that a Bayes factor compares two models, say, \(\mathcal{M}_{1}\) and \(\mathcal{M}_{0}\), and suppose that the vector of free parameters of these models are denoted by \(\theta_{1}\) and \(\theta_{0}\) respectively. For instance, we write \(\theta_{1} = ( \mu, \sigma)\) and \(\theta_{0} = \sigma\) for the one-sample \(t\)-test.
+
+To construct a Bayes factor, the statistician needs to select two priors --one for each model, which are denoted by \(\pi_{1} (\theta_{1})\) and \(\pi_{0}(\theta_{0})\) respectively (e.g., Bayarri, Berger, Forte, \& Garcia-Donato, 2012), and provide its users with a computational method. We only introduced the notation \(\pi_{1} (\theta_{1})\) and \(\pi_{0} (\theta_{0})\), chosen by the statistician, to highlight their difference from prior model probabilities, which are denoted with a capital \(P\), chosen by the field experts.
+
+The Bayesian \(t\)-test is based on the priors \(\pi_{1}\), which puts an \enquote{uninformative} prior on the nuisance parameter \(\sigma\) (e.g., Ly, Marsman, Verhagen, Grasman, \& Wagenmakers, 2017) in conjunction with a Cauchy prior on the test-relevant parameter represented as a population effect size \(\delta = \mu / \sigma\), and the prior \(\pi_{0}\) with the same \enquote{uninformative} prior on the nuisance parameter \(\sigma\). With these priors, the resulting Bayes factor has a number of desirable properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Measurement invariant.} The Bayes factor as a measure of evidence does not change if the units of measurements are changed (e.g., Rouder, Speckman, Sun, Morey, \& Iverson, 2009). For instance, if the data were to consist of temperature measurements, the Bayes factor would be the same regardless of the data being entered as Celsius or Fahrenheit.
+\item
+  \textbf{Predictively matched.} The Bayes factor reflects perfectly indifference, i.e., \(\textnormal{BF}_{10}=1\) when the data are completely uninformative. A Bayes factor of one implies that the posterior model probabilities equal the prior model probabilities, and nothing has been learned; see Jeffreys (1961), for further details.
+\item
+  \textbf{Information consistent.} For a sufficiently large enough fixed sample size \(n\), the Bayes factor overwhelmingly provides support for the alternative, whenever the observed \(t\)-value goes to infinity; see Gronau, Ly, \& Wagenmakers (2017), Ly, Verhagen, \& Wagenmakers (2016) for further details.
+\item
+  \textbf{(Asymptotically) consistent.} As the Bayes factor takes in an increasing number of samples of data points generated under the null model, then as \(n\) grows, the Bayes factor \(\textnormal{BF}_{10}\) tends to zero to convey support for the data generating model \(\mathcal{M}_{0}\). On the other hand, if \(n\) grows with data generated under the alternative, the Bayes factor \(\textnormal{BF}_{10}\) grows unbounded; see for instance Liang, Paulo, Molina, Clyde, \& Berger (2008).
+\item
+  \textbf{Robust to changes in the sample size.} With the uninformative prior on \(\sigma\), this Bayes factor allows for optional stopping, that is, early stopping when there is enough evidence for the alternative (e.g., Hendriksen, Heide, \& Grünwald, 2018) without inflating the type I error. On top of this, the Bayesian \(t\)-test also allows for optional continuation, which implies that one can build on top of previous results; see for instance Faulkenberry (2019), Grünwald, Heide, \& Koolen (2019), Ly, Etz, Marsman, \& Wagenmakers (2019). Note that properties (4), (5), and (6) imply that the Bayesian \(t\)-test, first derived by Jeffreys (1948), also has good frequentist properties.
+\end{enumerate}
+
+With these priors at hand, the Bayes factor is defined as a ratio of marginal likelihoods, that is,
+
+\begin{align}
+\textnormal{BF}_{10} = \frac{ \int_{\Theta_{1}} f(d \, | \, \theta_{1}) \pi_{1}(\theta_{1}) \textnormal{d} \theta_{1}}{\int_{\Theta_{0}} f(d \, | \, \theta_{0}) \pi_{0}(\theta_{0}) \textnormal{d} \theta_{0}},
+\end{align}
+
+which practitioners do not need to compute themselves, as JASP does the computations for them in the background.
+
+\hypertarget{theory-of-bayesian-linear-regression}{%
+\subsection{Theory of Bayesian linear regression}\label{theory-of-bayesian-linear-regression}}
+
+\hypertarget{linear-regression-models}{%
+\subsubsection{Linear regression models}\label{linear-regression-models}}
+
+We first elaborate on linear regression models, before we discuss the Bayesian implementation.
+
+We write \(Y_{i}\) for the continous outcome variable of the \(i\)th participant, and \(x_{i1}, x_{i2}, \ldots, x_{ip}\) for the \(i\)th participant's covariates. For the example at hand, \(Y_{i}\) represents a participant's mathematical fluency score, and we have \(p=2\) covariates consisting of the \(i\)th participant's measurements \(x_{i1}=\text{ symbolicDE}_{i}\), and \(x_{i2}=\text{ nonsymbolicDE}_{i}\).
+
+The difficulty here is that with \(p\) covariates there are \(2^{p}\) models. For instance with \(p=2\), we have \(2^{p} = 4\) models, which are given by
+\begin{align*}
+\mathcal{M}_{0} & : Y_{i} =\beta_{0} + \varepsilon_{i}, \\
+\mathcal{M}_{1} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \varepsilon_{i}, \\
+\mathcal{M}_{2} & : Y_{i} =\beta_{0} + \beta_{2} x_{i2} + \varepsilon_{i}, \\
+\mathcal{M}_{3} & : Y_{i} =\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} + \varepsilon_{i},
+\end{align*}
+where \(\beta_{0}\) represents the intercept, \(\beta_{1}\) the effect of symbolicDE on \(Y_{i}\), \(\beta_{2}\) the effect of nonsymbolicDE on \(Y_{i}\), and \(\varepsilon_{i} \sim \mathcal{N}(0, \sigma^{2})\) is a normally distributed error. Each model can be thought of as an operationalisation of a hypothesis. Note that all models include the intercept and error variance \(\sigma^{2}\) parameters, which are related to the outcome variable \(Y_{i}\). The models \(\mathcal{M}_{0},\mathcal{M}_{1},\mathcal{M}_{2}, \mathcal{M}_{3}\) have 2, 3, 3 and 4 parameters, respectively. In general, the largest model will have \(p + 2\) parameters.
+
+All models decompose \(Y_{i}\) into two parts: a part that is structural, and a part that is simply noise. For the null model, all the structure is given by the intercept \(\beta_{0}\), whereas in \(\mathcal{M}_{1}, \mathcal{M}_{2}\) and \(\mathcal{M}_{3}\) the intercept \(\beta_{0}\) competes with the covariates to predict \(Y_{i}\). Hence, despite terms being denoted with the same symbol, such as the intercepts \(\beta_{0}\), they have a different impact on \(Y_{i}\) depending on the context given by the model. As such, the question whether symbolicDE has an effect on fluency depends on the particular model that is being compared.
+
+\hypertarget{bayesian-linear-regression}{%
+\subsubsection{Bayesian linear regression}\label{bayesian-linear-regression}}
+
+To avoid the dependence on which model is being compared, we exploit the flexibility of Bayesian methods, and address questions such as whether symbolicDE has an effect on fluency by \emph{averaging} across all models considered. To model average we require weights, and for simplicity we assume that all models are equally probable a priori. In other words, we put a uniform prior on the models, and because we have four models each model gets a prior model probability of \(1/4=0.25\). Table \ref{tabLinreg} provides a summary of this information.
+
+\begin{table}
+\label{tabLinreg}
+\caption{List of all models with the two potential predictors and the prior model probability of each model. A "1" indicates that the predictor is active in model, whereas a "0" implies that the predictor is inactive.}
+\begin{center}
+\begin{tabular}{rllll}
+\hline
+Model & symbolicDE & nonsymbolicDE & \( P(\mathcal{M}) \) \\
+\hline
+\( \mathcal{M}_{0} \) & 0 & 0 & 0.25 \\
+\( \mathcal{M}_{1} \) & 1 & 0 & 0.25 \\
+\( \mathcal{M}_{2} \) & 0 & 1 & 0.25 \\
+\( \mathcal{M}_{3} \) & 1 & 1 & 0.25 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The a priori probability of the relevance of the covariate symbolicDE on \(Y_{i}\) is given by aggregating the probabilities of the models \(\mathcal{M}_{1}\) and \(\mathcal{M}_{3}\), thus, 50\%. Similarly, the a priori relevance of the covariate nonsymbolicDE is also 50\%, whereas the a priori probability of both symbolicDE and nonsymbolicDE having an impact on \(Y_{i}\) is only given by \(P(\mathcal{M}_{3}) = 0.25\).
+
+To compute the relevance of each covariate \textbf{after} data observation, we simply replace the prior model probabilities in the table by the posterior model probabilities. These are calculated using a generalisation of Equation 1 which specifies that the posterior model probability for model \(k=0, 1, \ldots p-1 = 3\) is given by
+\begin{equation}
+\label{eqPriorToPosteriorGeneral}
+P(\mathcal{M}_{k} \mid d) = \frac{ \text{BF}_{k0}(d) P(\mathcal{M}_{k})}{ \sum_{k=0}^{p-1} \text{BF}_{k0}(d) P(\mathcal{M}_{k})},
+\end{equation}
+where the comparison between the null model and itself is defined as \(\text{BF}_{00}(d) = 1\) regardless of the data. Now, suppose that the model \(\mathcal{M}_{k}\) has \(l \leq p\) active covariates. Then for the Bayes factor \(\text{BF}_{k0}\), we need to choose a prior on \(l + 2\) parameters for \(\mathcal{M}_{k}\) and a prior on \(2\) parameters for \(\mathcal{M}_{0}\). Zellner \& Siow (1980) proposed to use essentially the same priors Jeffreys used for his Bayesian \(t\)-test. This connection is made explicit by exploiting the assumption of normally distributed errors to rewrite the linear regression models as the following normal means models:
+\begin{align}
+\label{eqLinRegAsNormal0}
+\mathcal{M}_{0} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0}, \sigma^{2}), \\
+\mathcal{M}_{1} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{1} x_{i1}, \sigma^{2}), \\
+\mathcal{M}_{2} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{2} x_{i2}, \sigma^{2}), \\
+\label{eqLinRegAsNormal3}
+\mathcal{M}_{3} & : Y_{i} \, | \, x_{i} \sim \mathcal{N}(\beta_{0} + \beta_{1} x_{i1} + \beta_{2} x_{i2} , \sigma^{2}),
+\end{align}
+where \(Y_{i} \, | \, x_{i}\) refers to the outcome variable given the covariates \(x_{i}\).
+
+More explicitly, the Bayes factor \(\text{BF}_{k0}\), where \(\mathcal{M}_{k}\) has \(l\) active covariates, uses an \enquote{uninformative} prior on the nuisance parameter \(\beta_{0}\) and \(\sigma\) in both models, and for the \(\mathcal{M}_{k}\) an additional \(l\)-dimensional multivariate Cauchy prior on the vector of population effect sizes \(\delta\). The vector of effect sizes is defined by rescaling the vector of active \(\beta\) coefficients with respect to \(\sigma\), but also with respect to the covariates. More explicitly, when \(l=1\), say, only \(\beta_{2}\) is active then the effect size parameter is given by \(\delta = \beta_{2} s_{x_{2}}/\sigma\), where \(s_{x_{2}}\) is observed standard error of the second covariate. If the second covariate is standardised, then \(s_{x_{2}} = 1\), and we get the same definition of effect size as in the \(t\)-test, but with \(\mu\) replaced by \(\beta_{2}\). Furthermore, with \(l = 1\), the prior on \(\delta\) is than a \(1\)-dimensional Cauchy distribution, indeed, the same one we would use in the \(t\)-test.
+
+With both the prior model probabilities and the Bayes factor at hand \eqref{eqPriorToPosteriorGeneral} now provides the posterior model probabilities. Once the latter are computed, the posterior relevance of each covariate can be assessed as we have done in Table \ref{tabLinreg}. We elaborate on this procedure with the example.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-bayarri2012criteria}{}%
+Bayarri, M. J., Berger, J. O., Forte, A., \& Garcia-Donato, G. (2012). Criteria for Bayesian model choice with application to variable selection. \emph{The Annals of Statistics}, \emph{40}(3), 1550--1577.
+
+\leavevmode\hypertarget{ref-faulkenberry2019estimating}{}%
+Faulkenberry, T. J. (2019). Estimating evidential value from analysis of variance summaries: A comment on ly et al.(2018). \emph{Advances in Methods and Practices in Psychological Science}, 2515245919872960.
+
+\leavevmode\hypertarget{ref-gronau2017informed}{}%
+Gronau, Q. F., Ly, A., \& Wagenmakers, E.-J. (2017). Informed Bayesian \(t\)-tests. \emph{arXiv Preprint arXiv:1704.02479}.
+
+\leavevmode\hypertarget{ref-grunwald2019safe}{}%
+Grünwald, P., Heide, R. de, \& Koolen, W. (2019). Safe testing. \emph{arXiv Preprint arXiv:1906.07801}.
+
+\leavevmode\hypertarget{ref-hendriksen2018optional}{}%
+Hendriksen, A., Heide, R. de, \& Grünwald, P. (2018). Optional stopping with Bayes factors: A categorization and extension of folklore results, with an application to invariant situations. \emph{arXiv Preprint arXiv:1807.09077}.
+
+\leavevmode\hypertarget{ref-jeffreys1948theory2}{}%
+Jeffreys, H. (1948). \emph{Theory of probability} (2nd ed.). Oxford, UK: Oxford University Press.
+
+\leavevmode\hypertarget{ref-jeffreys1961}{}%
+Jeffreys, H. (1961). \emph{The Theory of Probability (3rd ed.)}. Oxford, UK: Oxford University Press.
+
+\leavevmode\hypertarget{ref-liang2008mixtures}{}%
+Liang, F., Paulo, R., Molina, G., Clyde, M. A., \& Berger, J. O. (2008). Mixtures of g priors for Bayesian variable selection. \emph{Journal of the American Statistical Association}, \emph{103}(481).
+
+\leavevmode\hypertarget{ref-ly2019replication}{}%
+Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (2019). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}, \emph{51}(6), 2498--2508. \url{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}
+
+\leavevmode\hypertarget{ref-ly2017tutorial}{}%
+Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. \url{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}
+
+\leavevmode\hypertarget{ref-ly2016harold}{}%
+Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. \url{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}
+
+\leavevmode\hypertarget{ref-rouder2009bayesian}{}%
+Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., \& Iverson, G. (2009). Bayesian t tests for accepting and rejecting the null hypothesis. \emph{Psychonomic Bulletin \& Review}, \emph{16}(2), 225--237.
+
+\leavevmode\hypertarget{ref-zellner1980posterior}{}%
+Zellner, A., \& Siow, A. (1980). Posterior odds ratios for selected regression hypotheses. In J. M. Bernardo, M. H. DeGroot, D. V. Lindley, \& A. F. Smith (Eds.), \emph{Bayesian statistics: Proceedings of the first international meeting held in Valencia} (Vol. 1, pp. 585--603). Springer.
+
+\leavevmode\hypertarget{ref-bayarri2012criteria}{}%
+Bayarri, M. J., Berger, J. O., Forte, A., \& Garcia-Donato, G. (2012). Criteria for Bayesian model choice with application to variable selection. \emph{The Annals of Statistics}, \emph{40}(3), 1550--1577.
+
+\leavevmode\hypertarget{ref-faulkenberry2019estimating}{}%
+Faulkenberry, T. J. (2019). Estimating evidential value from analysis of variance summaries: A comment on ly et al.(2018). \emph{Advances in Methods and Practices in Psychological Science}, 2515245919872960.
+
+\leavevmode\hypertarget{ref-gronau2017informed}{}%
+Gronau, Q. F., Ly, A., \& Wagenmakers, E.-J. (2017). Informed Bayesian \(t\)-tests. \emph{arXiv Preprint arXiv:1704.02479}.
+
+\leavevmode\hypertarget{ref-grunwald2019safe}{}%
+Grünwald, P., Heide, R. de, \& Koolen, W. (2019). Safe testing. \emph{arXiv Preprint arXiv:1906.07801}.
+
+\leavevmode\hypertarget{ref-hendriksen2018optional}{}%
+Hendriksen, A., Heide, R. de, \& Grünwald, P. (2018). Optional stopping with Bayes factors: A categorization and extension of folklore results, with an application to invariant situations. \emph{arXiv Preprint arXiv:1807.09077}.
+
+\leavevmode\hypertarget{ref-jeffreys1948theory2}{}%
+Jeffreys, H. (1948). \emph{Theory of probability} (2nd ed.). Oxford, UK: Oxford University Press.
+
+\leavevmode\hypertarget{ref-jeffreys1961}{}%
+Jeffreys, H. (1961). \emph{The Theory of Probability (3rd ed.)}. Oxford, UK: Oxford University Press.
+
+\leavevmode\hypertarget{ref-liang2008mixtures}{}%
+Liang, F., Paulo, R., Molina, G., Clyde, M. A., \& Berger, J. O. (2008). Mixtures of g priors for Bayesian variable selection. \emph{Journal of the American Statistical Association}, \emph{103}(481).
+
+\leavevmode\hypertarget{ref-ly2019replication}{}%
+Ly, A., Etz, A., Marsman, M., \& Wagenmakers, E. (2019). Replication Bayes factors from evidence updating. \emph{Behavior Research Methods}, \emph{51}(6), 2498--2508. \url{https://doi.org/https://doi.org/10.3758/s13428-018-1092-x}
+
+\leavevmode\hypertarget{ref-ly2017tutorial}{}%
+Ly, A., Marsman, M., Verhagen, A. J., Grasman, R. P. P. P., \& Wagenmakers, E.-J. (2017). A tutorial on Fisher information. \emph{Journal of Mathematical Psychology}, \emph{80}, 40--55. \url{https://doi.org/https://doi.org/10.1016/j.jmp.2017.05.006}
+
+\leavevmode\hypertarget{ref-ly2016harold}{}%
+Ly, A., Verhagen, A. J., \& Wagenmakers, E. (2016). 201601Harold Jeffreys's default Bayes factor hypothesis tests: Explanation, extension, and application in psychology. \emph{Journal of Mathematical Psychology}, \emph{72}, 19--32. \url{https://doi.org/http://dx.doi.org/10.1016/j.jmp.2015.06.004}
+
+\leavevmode\hypertarget{ref-rouder2009bayesian}{}%
+Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., \& Iverson, G. (2009). Bayesian t tests for accepting and rejecting the null hypothesis. \emph{Psychonomic Bulletin \& Review}, \emph{16}(2), 225--237.
+
+\leavevmode\hypertarget{ref-zellner1980posterior}{}%
+Zellner, A., \& Siow, A. (1980). Posterior odds ratios for selected regression hypotheses. In J. M. Bernardo, M. H. DeGroot, D. V. Lindley, \& A. F. Smith (Eds.), \emph{Bayesian statistics: Proceedings of the first international meeting held in Valencia} (Vol. 1, pp. 585--603). Springer.
+
+\end{document}

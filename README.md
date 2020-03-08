@@ -1,6 +1,6 @@
-# Workshop on Bayesian Statistics in Numerical Cognition
+# Workshop and Tutorial on Bayesian Statistics in Numerical Cognition
 
-This repository contains materials for my workshop on Bayesian Statistics in Numerical Cognition, held at [MCLS 2019](https://www.the-mcls.org/) in Ottawa, ON. 
+This repository contains materials for my workshop on Bayesian Statistics in Numerical Cognition, held at [MCLS 2019](https://www.the-mcls.org/) in Ottawa, ON. In addition, it hosts the source files for our tutorial paper "[Bayesian Inference in Numerical Cognition: A Tutorial using JASP](jncTutorial/manuscript.pdf)", jointly written with Alexander Ly and E.J. Wagenmakers.
 
 ## Materials
 - Workshop slides ([pdf](workshop.pdf))
@@ -25,10 +25,10 @@ Each of the datasets below is formatted in CSV (comma separated value) format, w
 	- `fluency`: a measure of math fluency from Woodcock-Johnson III (timed math facts for 3 minutes)
 
 - *factorial ANOVA example* ([csv](https://raw.githubusercontent.com/tomfaulkenberry/bayesMCLS/master/datasets/anova.csv))
-  - these data are based on a replication of [Campbell and Fugelsang (2001)](https://dx.doi.org/10.1016/S0010-0277(01)00115-9), who found an interaction between problem size and format in mental addition verification. The variables in this dataset include:
-    - `subject`: this is a within-subjects design, so `subject` number will be a random effects term.
-	- `size`: problems were either "small" (product less than or equal to 25) or "large" (product greater than 25)
-	- `format`: problems were presented in either "digit" or "word" format
-	- `rt`: collapsed (mean) RT across all problems for each combination of subject, size, and format.
+  - these data are based on a replication of [Campbell and Fugelsang (2001)](https://dx.doi.org/10.1016/S0010-0277(01)00115-9), who found an interaction between problem size and format in mental addition verification. The variables all represent RTs (in msec) for the following experimental conditions:
+    - `small.digit`: small problems, digit format
+    - `small.word`: small problems, word format
+    - `large.digit`: large problems, digit format
+    - `large.word`: large problems, word format
 
 

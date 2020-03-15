@@ -6,6 +6,8 @@ This repository contains materials for my workshop on Bayesian Statistics in Num
 - Workshop slides ([pdf](workshop.pdf))
 - [JASP software](http://jasp-stats.org)
 - Online Bayes factor [calculator](https://tomfaulkenberry.shinyapps.io/anovaBFcalc/) for ANOVA summaries
+- Tutorial paper ([pdf](jncTutorial/manuscript.pdf))
+- Technical supplement ([pdf](jncTutorial/supplement.pdf))
 
 ## Data sets 
 Each of the datasets below is formatted in CSV (comma separated value) format, which is the format required for JASP. You will want to download the files somewhere on your computer. Windows users should "right-click" on the CSV link. Mac users should "ctrl+click" on the CSV link. Alternatively, you can download a single ZIP archive of the files [here](https://raw.githubusercontent.com/tomfaulkenberry/bayesMCLS/master/datasets.zip).
